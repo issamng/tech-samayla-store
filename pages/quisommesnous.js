@@ -10,7 +10,7 @@ export default function QuiSommesNousPage() {
       <Center>
         <h2>Qui sommes nous ? </h2>
         <p>
-          Chez ****, nous sommes passionnés par la technologie et déterminés à
+          Chez Tech Samayla, nous sommes passionnés par la technologie et déterminés à
           offrir à nos clients une expérience d'achat exceptionnelle. Fondée
           avec la conviction que la technologie devrait être accessible à tous,
           notre entreprise s'efforce de proposer une gamme diversifiée de
@@ -24,7 +24,7 @@ export default function QuiSommesNousPage() {
           qualité, nous avons ce qu'il vous faut.
         </p>
         <p>
-          Chez ****, nous mettons l'accent sur la satisfaction du client. Notre
+          Chez Tech Samayla, nous mettons l'accent sur la satisfaction du client. Notre
           engagement envers la qualité, la fiabilité et le service exceptionnel
           se reflète dans chaque aspect de notre entreprise. Nous croyons que la
           technologie peut améliorer la vie quotidienne, et c'est pourquoi nous

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button, { ButtonStyle } from "./Button";
 import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import FlyingButton from "./FlyingButton";

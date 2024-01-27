@@ -10,7 +10,7 @@ export default function DeliveryPage() {
       <Center>
         <h2>Livraison rapide et fiable pour tous vos produits </h2>
         <p>
-          Chez ****, nous comprenons à quel point il est essentiel pour vous de
+          Chez Tech Samayla, nous comprenons à quel point il est essentiel pour vous de
           recevoir vos produits rapidement et en parfait état. C'est pourquoi
           nous nous engageons à offrir une expérience de livraison
           exceptionnelle pour tous nos articles multimédia, notamment les
@@ -34,7 +34,7 @@ export default function DeliveryPage() {
           besoins. Nous nous adaptons à votre emploi du temps.
         </p>
         <p>
-          Chez ****, nous sommes déterminés à dépasser vos attentes en matière
+          Chez Tech Samayla, nous sommes déterminés à dépasser vos attentes en matière
           de livraison. Faites-nous confiance pour vous fournir un service
           rapide, fiable et transparent à chaque commande.
         </p>

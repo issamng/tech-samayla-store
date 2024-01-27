@@ -1,10 +1,7 @@
 import Center from "@/components/Center";
 import styled from "styled-components";
-// import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
-// import { useContext } from "react";
-// import { CartContext } from "./CartContext";
 import FlyingButton from "./FlyingButton";
 import { RevealWrapper } from "next-reveal";
 
@@ -65,10 +62,6 @@ const ButtonsWrapper = styled.div`
 `;
 
 export default function Featured({ product }) {
-  // const {addProduct} = useContext(CartContext);
-  // function addFeaturedToCart() {
-  //   addProduct(product._id);
-  // }
   return (
     <Bg>
       <Center>
@@ -83,7 +76,6 @@ export default function Featured({ product }) {
                     href={"/product/" + product._id}
                     outline={1}
                     white={1}
-                    
                   >
                     En savoir plus
                   </ButtonLink>
@@ -102,12 +94,7 @@ export default function Featured({ product }) {
           </Column>
           <Column>
             <RevealWrapper>
-              
-              <img
-                className={"main"}
-                src={product.images?.[0]}
-                alt=""
-              />
+              <img className={"main"} src={product.images?.[0]} alt="" />
             </RevealWrapper>
           </Column>
         </ColumnsWrapper>
