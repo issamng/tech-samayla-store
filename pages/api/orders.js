@@ -7,6 +7,6 @@ export default async function handle(req,res) {
     await mongooseConnect();
     const {user} = await getServerSession(req,res,authOptions);
     res.json(
-        await Order.find({userEmail:user.email})
+        await Order.find({userEmail:user.email}.sort({createdAt:-1}))
     )
 }
