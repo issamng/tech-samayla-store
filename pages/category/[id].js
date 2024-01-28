@@ -11,9 +11,14 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CategoryHeader = styled.div`
-  display: flex;
+  display:block;
+  margin-bottom:15px;
   align-items: center;
   justify-content: space-between;
+  @media screen and (min-width: 818px) {
+    display: flex;
+  }
+
   h1 {
     font-size: 1.5rem;
   }
@@ -21,7 +26,11 @@ const CategoryHeader = styled.div`
 
 const FiltersWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
+  @media screen and (min-width: 818px) {
+    flex-wrap: nowrap;
+  }
 `;
 
 const Filter = styled.div`

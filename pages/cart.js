@@ -221,8 +221,8 @@ export default function CartPage() {
                         </Button>
                       </td>
                       <td>
-                        {cartProducts.filter((id) => id === product._id)
-                          .length * product.prix}
+                        {Number((cartProducts.filter((id) => id === product._id)
+                          .length * product.prix).toFixed(2))}
                         €
                       </td>
                     </tr>
