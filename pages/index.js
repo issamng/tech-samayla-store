@@ -11,7 +11,6 @@ import { Setting } from "@/models/Setting";
 
 
 export default function HomePage({ featuredProduct, newProducts, wishedNewProducts }) {
-  // console.log({newProducts});
   return (
     <div>
       <Header />
@@ -23,9 +22,9 @@ export default function HomePage({ featuredProduct, newProducts, wishedNewProduc
 }
 
 export async function getServerSideProps(context) {
+  await mongooseConnect();
   const featuredProductSetting = await Setting.findOne({name:'featuredProductId'})
   const featuredProductId = featuredProductSetting.value;
-  await mongooseConnect();
   const featuredProduct = await Product.findById(featuredProductId);
   const newProducts = await Product.find({}, null, {
     sort: { _id: -1 },

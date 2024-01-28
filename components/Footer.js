@@ -48,7 +48,7 @@ export default function Footer() {
     <StyledFooter>
       <LinksContainer>
         <FooterLink href={"/quisommesnous"}>Qui sommes nous ?</FooterLink>
-        <FooterLink href={"/"}>Nous contacter</FooterLink>
+        <FooterLink href={"/contact"}>Nous contacter</FooterLink>
         <FooterLink href={"/"}>Nous rejoindre</FooterLink>
 
         <FooterLink href={"/"}>FAQ</FooterLink>
