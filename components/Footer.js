@@ -5,6 +5,7 @@ import "react-social-icons/instagram";
 import "react-social-icons/facebook";
 import "react-social-icons/x";
 
+
 const StyledFooter = styled.div`
   // position: absolute;
   bottom: 0;
@@ -67,6 +68,7 @@ export default function Footer() {
           />
           <SocialIcon bgColor="white" fgColor="#222" url="https://www.x.com" style={{ height: 35, width: 35 }}/>
         </SocialIconContainer>
+        
       </LinksContainer>
     </StyledFooter>
   );

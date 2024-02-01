@@ -177,7 +177,7 @@ export default function AccountPage() {
                         <ProductBox
                           key={wp._id}
                           {...wp}
-                          wished={true}
+                          wished={1}
                           removeFromWishlist={productRemovedFromWishlist}
                         />
                       ))}

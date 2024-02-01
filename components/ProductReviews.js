@@ -51,6 +51,9 @@ const AllReviewsHeader = styled.div`
   }
 `;
 
+
+
+
 export default function ProductReviews({ product }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -97,7 +100,7 @@ export default function ProductReviews({ product }) {
               placeholder="Partagez votre opinion avec les autres clients"
             />
             <div>
-              <Button primary={1} onClick={submitReview}>
+              <Button primary="true" hover="true" onClick={submitReview}>
                 Valider
               </Button>
             </div>

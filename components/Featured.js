@@ -21,7 +21,7 @@ const Title = styled.h1`
 
 const Desc = styled.p`
   color: #aaa;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 `;
 const ColumnsWrapper = styled.div`
   display: grid;

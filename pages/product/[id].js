@@ -23,6 +23,7 @@ const ColWrapper = styled.div`
   }
   gap: 40px;
   margin-top: 40px;
+  margin-bottom:40px;
 `;
 
 const PriceRow = styled.div`

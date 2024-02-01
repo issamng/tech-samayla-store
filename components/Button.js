@@ -3,7 +3,6 @@ import { primary } from "@/lib/colors";
 
 export const ButtonStyle = css`
   border: 0;
-
   padding: 5px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -11,6 +10,7 @@ export const ButtonStyle = css`
   align-items: center;
   text-decoration: none;
   font-size: 16px;
+  font-family: inherit;
   svg {
     height: 16px;
     margin-right: 5px;

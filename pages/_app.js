@@ -1,6 +1,6 @@
 import { CartContextProvider } from "@/components/CartContext";
 import { SessionProvider } from "next-auth/react";
-import styled, { createGlobalStyle } from "styled-components";
+import  { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -9,8 +9,8 @@ body{
   padding:0;
   margin:0;
   background-color: #eee;
-  font-family: 'Roboto', sans-serif;
-},
+  font-family: system-ui;
+}
 
 hr{
   display: block;

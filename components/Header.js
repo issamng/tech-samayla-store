@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/Bars";
 import SearchIcon from "./icons/SearchIcon";
+import CloseIcon from "./icons/CloseIcon";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -129,7 +130,8 @@ export default function Header() {
             </Link>
             {/* responsive */}
             <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
-              <BarsIcon />
+              {/* <BarsIcon /> */}
+              {mobilenavactive ? <CloseIcon /> : <BarsIcon />}
             </NavButton>
           </SideIcons>
         </Wrapper>
