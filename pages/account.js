@@ -65,6 +65,7 @@ const SubmitButton = styled(Button)`
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
+  margin-top:5px;
   justify-content: center;
   cursor: pointer;
 `;

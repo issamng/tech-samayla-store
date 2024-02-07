@@ -24,10 +24,15 @@ const StyledFooter = styled.div`
 `;
 
 const LinksContainer = styled.div`
-  /* display: block; */
-  text-align: center;
+  display: flex;
+  gap: 50px;
+  justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  padding: 0 15px;
+  @media screen and (min-width: 768px) {
+    gap: 100px;
+  }
 `;
 
 const FooterLink = styled(Link)`
@@ -35,7 +40,7 @@ const FooterLink = styled(Link)`
   text-decoration: none;
   display: block;
   padding: 5px 0;
-  font-size:.9rem;
+  font-size: 0.9rem;
   &:hover {
     text-decoration: underline;
   }
@@ -59,10 +64,9 @@ const SocialIconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content:center;
+  justify-content: center;
   /* margin-top: 40px; */
-  
-  
+
   @media screen and (max-width: 768px) {
     text-align: center;
     align-items: center;
@@ -74,14 +78,27 @@ export default function Footer() {
   return (
     <StyledFooter>
       <LinksContainer>
-        <FooterLink href={"/quisommesnous"}>Qui sommes nous ?</FooterLink>
-        <FooterLink href={"/contact"}>Nous contacter</FooterLink>
-        <FooterLink href={"/"}>Nous rejoindre</FooterLink>
-
-        <FooterLink href={"/"}>FAQ</FooterLink>
-
-        <FooterLink href={"/delivery"}>Livraison</FooterLink>
+        <div>
+          <FooterLink href={"/"}>Accueil</FooterLink>
+          <FooterLink href={"/categories"}>Rayons</FooterLink>
+          <FooterLink href={"/products"}>Tous les produits</FooterLink>
+          <FooterLink href={"/account"}>Mon compte</FooterLink>
+          <FooterLink href={"/search"}>Rechercher un produit</FooterLink>
+        </div>
+        <div>
+          <FooterLink href={"/quisommesnous"}>Qui sommes nous ?</FooterLink>
+          <FooterLink href={"/contact"}>Nous contacter</FooterLink>
+          <FooterLink href={"/"}>Recrutement</FooterLink>
+          <FooterLink href={"/"}>Politique de confidentialité</FooterLink>
+          <FooterLink href={"/delivery"}>Livraison</FooterLink>
+        </div>
+        <div>
+          <FooterLink href={"/signup"}>Inscription</FooterLink>
+          <FooterLink href={"/signin"}>Connexion</FooterLink>
+          <FooterLink href={"/"}>FAQ</FooterLink>
+        </div>
       </LinksContainer>
+
       <SocialIconWrapper>
         <JoinUs>REJOINS-NOUS !</JoinUs>
         <SocialIconContainer>
@@ -103,7 +120,7 @@ export default function Footer() {
             url="https://www.x.com"
             style={{ height: 35, width: 35 }}
           />
-           <SocialIcon
+          <SocialIcon
             bgColor="#ddd"
             fgColor="#222"
             url="https://www.youtube.com"
