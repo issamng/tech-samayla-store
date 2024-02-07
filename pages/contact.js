@@ -17,6 +17,7 @@ const FormWrapper = styled.div`
 const FormTitle = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 const InputField = styled.input`
@@ -26,6 +27,8 @@ const InputField = styled.input`
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 500;
 `;
 
 const TextAreaField = styled.textarea`
@@ -38,6 +41,7 @@ const TextAreaField = styled.textarea`
   box-sizing: border-box;
   resize: none;
   font-family: inherit;
+  font-weight:500;
 `;
 
 const SubmitButton = styled(Button)`
@@ -71,8 +75,9 @@ export default function ContactPage() {
     <>
       <Header />
       <Center>
-        <FormTitle>Nous contacter</FormTitle>
+       
         <FormWrapper>
+        <FormTitle>Nous contacter</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
               type="text"
@@ -109,6 +114,9 @@ export default function ContactPage() {
           </form>
         </FormWrapper>
       </Center>
+      
+      {/* <div style={{marginTop:'50px'}}><img src="advice.jpg" style={{ width: '50%', height: '350px' }} /> </div> */}
+      
       <Footer />
     </>
   );

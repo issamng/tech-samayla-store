@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Header from "@/components/Header";
@@ -17,6 +16,7 @@ const FormWrapper = styled.div`
 const FormTitle = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 const InputField = styled.input`
@@ -59,8 +59,9 @@ export default function SignUpPage() {
     <>
       <Header />
       <Center>
-        <FormTitle>Créer un compte</FormTitle>
+        
         <FormWrapper>
+        <FormTitle>Créer un compte</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
               type="text"

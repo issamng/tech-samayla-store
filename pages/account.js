@@ -13,6 +13,9 @@ import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import UserIcon from "@/components/icons/UserIcon";
+import PasswordIcon from "@/components/icons/PasswordIcon";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -35,20 +38,53 @@ const WishedProductsGrid = styled.div`
   gap: 40px;
 `;
 
-// const ConnectGoogle = styled.button`
-//   display: flex;
-//   align-items: center;
-//   background-color: white;
-//   border-radius: 0.5rem;
-//   padding: 0.5rem 1rem;
-//   border: 1px solid #aaa;
-//   gap: 3px;
-//   cursor: pointer;
+//Login form
+const InputContainer = styled.div`
+  position: relative;
+`;
 
-//   svg {
-//     height: 20px;
-//   }
-// `;
+const InputField = styled.input`
+  width: 100%;
+  padding: 8px;
+  padding-left: 25px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  font-family: inherit;
+  border: none;
+  border-bottom: 2px solid #d1d1d4;
+  font-weight: 500;
+  &:active,
+  &:hover,
+  &:focus {
+    outline: none;
+    border-bottom-color: #29465B;
+  }
+`;
+
+const SubmitButton = styled(Button)`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const ConnectGoogle = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  width:100%;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #aaa;
+  gap: 3px;
+  font-family:inherit;
+  cursor: pointer;
+  svg {
+    height: 20px;
+  }
+`;
 
 export default function AccountPage() {
   const { data: session } = useSession();
@@ -145,6 +181,16 @@ export default function AccountPage() {
   //       console.error("Error fetching user information:", error);
   //     });
   // }, []);
+
+  //Login Form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+  console.log(errors);
 
   return (
     <>
@@ -272,7 +318,47 @@ export default function AccountPage() {
                 <>
                   <h2>Connectez-vous</h2>
 
-                  {/* <ConnectGoogle onClick={login}>
+                  {/* login form  */}
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <InputContainer>
+                      <i>
+                        <UserIcon />
+                      </i>
+                      <InputField
+                        type="email"
+                        placeholder="Email"
+                        {...register("Email", {
+                          required: true,
+                          pattern:
+                            /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
+                        })}
+                      />
+                    </InputContainer>
+                    <InputContainer>
+                      <i>
+                        <PasswordIcon />
+                      </i>
+                      <InputField
+                        type="password"
+                        placeholder="Mot de passe"
+                        {...register("Password", {
+                          required: true,
+                          max: 14,
+                          min: 6,
+                          maxLength: 14,
+                        })}
+                      />
+                    </InputContainer>
+                    <SubmitButton
+                      primary="true"
+                      hover="true"
+                      onClick={onSubmit}
+                    >
+                      Connexion
+                    </SubmitButton>
+                  </form>
+
+                  <ConnectGoogle onClick={login}>
                     <svg version="1.1" viewBox="0 0 48 48">
                       <path
                         fill="#EA4335"
@@ -293,17 +379,16 @@ export default function AccountPage() {
                       <path fill="none" d="M0 0h48v48H0z"></path>
                     </svg>
                     Se connecter avec Google
-                  </ConnectGoogle> */}
+                  </ConnectGoogle>
 
-                  <Button primary="true" onClick={login}>
+                  {/* <Button primary="true" onClick={login}>
                     Me connecter avec Google
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </WhiteBox>
           </div>
         </ColsWrapper>
-        
       </Center>
       <Footer />
     </>
