@@ -5,7 +5,7 @@ import ReviewsStars from "./ReviewsStars";
 import Textarea from "./Textarea";
 import Input from "./Input";
 import Button from "./Button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "./Spinner";
 
@@ -60,6 +60,16 @@ export default function ProductReviews({ product }) {
   const [stars, setStars] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
+
+  const loadReviews = useCallback(() => {
+    setReviewsLoading(true);
+    axios.get("/api/reviews?product=" + product._id).then((res) => {
+      setReviews(res.data);
+      setReviewsLoading(false);
+    });
+  }, [product._id]);
+  
+
   function submitReview() {
     const data = { title, desc, stars, product: product._id };
     axios.post("/api/reviews", data).then((res) => {
@@ -67,19 +77,15 @@ export default function ProductReviews({ product }) {
       setDesc("");
       setStars(0);
       loadReviews();
+      // const newReview = res.data; // Assuming res.data is the new review
+      // setReviews((prevReviews) => [newReview, ...prevReviews]);
     });
   }
   useEffect(() => {
     loadReviews();
-  }, [product._id]);
+  }, [loadReviews, product._id]);
 
-  function loadReviews() {
-    setReviewsLoading(true);
-    axios.get("/api/reviews?product=" + product._id).then((res) => {
-      setReviews(res.data);
-      setReviewsLoading(false);
-    });
-  }
+
   return (
     <div>
       <Title>Évaluations</Title>

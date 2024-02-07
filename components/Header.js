@@ -6,6 +6,7 @@ import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/Bars";
 import SearchIcon from "./icons/SearchIcon";
 import CloseIcon from "./icons/CloseIcon";
+import Image from "next/image";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -19,7 +20,7 @@ const Logo = styled(Link)`
 
   color: #fff;
   text-decoration: none;
-  position: relative;
+  
   z-index: 3;
   font-family: "Rock Salt", cursive;
   // font-size:1.2rem;
@@ -28,7 +29,8 @@ const Logo = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  align-items: center;
+  padding: 10px 0;
 `;
 
 const StyledNav = styled.nav`
@@ -115,7 +117,7 @@ export default function Header() {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={"/"}>TECH SAMAYLA</Logo>
+          <Logo href={"/"}><Image src="/logofinal.png" alt="Logo" width={127} height={50} /></Logo>
           <StyledNav mobilenavactive={mobilenavactive}>
             <NavLink href={"/"}>Accueil</NavLink>
             <NavLink href={"/products"}>Tous les produits</NavLink>

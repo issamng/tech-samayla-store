@@ -63,19 +63,6 @@ export default function ReviewsStars({
           </StarWrapper>
         </>
       ))}
-
-      {/* <StarWrapper>
-      {starClick >= 2 ? <StarSolid /> : <StarOutline />}
-      </StarWrapper>
-      <StarWrapper>
-      {starClick >= 3 ? <StarSolid /> : <StarOutline />}
-      </StarWrapper>
-      <StarWrapper>
-      {starClick >= 4 ? <StarSolid /> : <StarOutline />}
-      </StarWrapper>
-      <StarWrapper>
-      {starClick >= 5 ? <StarSolid /> : <StarOutline />}
-      </StarWrapper> */}
     </StarsWrapper>
   );
 }

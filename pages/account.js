@@ -303,6 +303,7 @@ export default function AccountPage() {
             </WhiteBox>
           </div>
         </ColsWrapper>
+        
       </Center>
       <Footer />
     </>
