@@ -65,12 +65,14 @@ const SocialIconWrapper = styled.div`
   flex-direction: column;
   gap: 20px;
   justify-content: center;
+  margin-left:60px;
   /* margin-top: 40px; */
 
   @media screen and (max-width: 768px) {
     text-align: center;
     align-items: center;
     margin-bottom: 10px;
+    margin-left:0;
   }
 `;
 
@@ -88,14 +90,14 @@ export default function Footer() {
         <div>
           <FooterLink href={"/quisommesnous"}>Qui sommes nous ?</FooterLink>
           <FooterLink href={"/contact"}>Nous contacter</FooterLink>
-          <FooterLink href={"/"}>Recrutement</FooterLink>
-          <FooterLink href={"/"}>Politique de confidentialité</FooterLink>
+          <FooterLink href={"/recruitment"}>Recrutement</FooterLink>
+          <FooterLink href={"/privacypolicy"}>Politique de confidentialité</FooterLink>
           <FooterLink href={"/delivery"}>Livraison</FooterLink>
         </div>
         <div>
           <FooterLink href={"/signup"}>Inscription</FooterLink>
           <FooterLink href={"/signin"}>Connexion</FooterLink>
-          <FooterLink href={"/"}>FAQ</FooterLink>
+          <FooterLink href={"/faq"}>FAQ</FooterLink>
         </div>
       </LinksContainer>
 

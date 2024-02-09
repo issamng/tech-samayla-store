@@ -75,7 +75,7 @@ const ConnectGoogle = styled.button`
   }
 `;
 
-const SignIn = styled(Link)`
+const SignUp = styled(Link)`
 text-decoration: none;
 color:#29465b;
 font-weight: bold;
@@ -164,7 +164,7 @@ export default function SignInPage() {
             </svg>
             Se connecter avec Google
           </ConnectGoogle>
-          <div>Vous n&apos;avez pas encore de compte? <SignIn href="/signup">Inscrivez-vous</SignIn></div>
+          <div>Vous n&apos;avez pas encore de compte? <SignUp href="/signup">Inscrivez-vous</SignUp></div>
           
         </FormWrapper>
       </Center>

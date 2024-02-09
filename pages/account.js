@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import UserIcon from "@/components/icons/UserIcon";
 import PasswordIcon from "@/components/icons/PasswordIcon";
+import Link from "next/link";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -80,11 +81,21 @@ const ConnectGoogle = styled.button`
   padding: 0.5rem 1rem;
   border: 1px solid #aaa;
   gap: 3px;
+  margin-bottom:15px;
   font-family:inherit;
   cursor: pointer;
   svg {
     height: 20px;
   }
+`;
+
+const SignUp = styled(Link)`
+text-decoration: none;
+color:#29465b;
+font-weight: bold;
+&:hover{
+    text-decoration: underline;
+}
 `;
 
 export default function AccountPage() {
@@ -381,6 +392,8 @@ export default function AccountPage() {
                     </svg>
                     Se connecter avec Google
                   </ConnectGoogle>
+
+                  <div>Vous n&apos;avez pas encore de compte? <SignUp href="/signup">Inscrivez-vous</SignUp></div>
 
                   {/* <Button primary="true" onClick={login}>
                     Me connecter avec Google

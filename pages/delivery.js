@@ -16,7 +16,7 @@ export default function DeliveryPage() {
           exceptionnelle pour tous nos articles multimédia, notamment les
           téléphones, tablettes, ordinateurs et montres connectées.
         </p>
-        <h2>Nos engagements: </h2>
+        <h2>Nos engagements </h2>
         <p>
           <b>Expédition rapide:</b> Vos commandes sont traitées avec la plus
           grande efficacité pour que vous puissiez profiter au plus vite de vos
