@@ -2,13 +2,14 @@
 import Center from "@/components/Center";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Title from "@/components/Title";
 
 export default function QuiSommesNousPage() {
   return (
     <>
       <Header />
       <Center>
-        <h2>Qui sommes nous ? </h2>
+        <Title>Qui sommes nous ?</Title>
         <p>
           Chez Tech Samayla, nous sommes passionnés par la technologie et déterminés à
           offrir à nos clients une expérience d'achat exceptionnelle. Fondée

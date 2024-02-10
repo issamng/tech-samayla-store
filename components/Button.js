@@ -39,6 +39,8 @@ ${(props) =>
       background-color: #fff;
       color: #000;
     `}
+
+
 ${(props) =>
     props.white &&
     props.outline &&
@@ -88,6 +90,26 @@ ${(props) =>
         height: 20px;
       }
     `}
+
+    ${(props) =>
+    props.signin &&
+    css`
+      background-color: white;
+      color:black;
+      margin-right:10px;
+      
+    `}
+
+    ${(props) =>
+    props.signup &&
+    css`
+      background-color: black;
+      color:white;
+      margin-right:10px;
+      border:1px solid #eee;
+      
+    `}
+    
 `;
 
 export const StyledButton = styled.button`

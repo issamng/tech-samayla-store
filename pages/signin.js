@@ -8,6 +8,8 @@ import UserIcon from "@/components/icons/UserIcon";
 import PasswordIcon from "@/components/icons/PasswordIcon";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const FormWrapper = styled.div`
   background-color: #f8f8f8;
@@ -15,7 +17,10 @@ const FormWrapper = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius:10px;
   width: 60%;
-  margin: 100px auto;
+  margin: 80px auto;
+  @media screen and (max-width: 768px) {
+    width:70%;
+  }
  
 `;
 
@@ -84,12 +89,25 @@ font-weight: bold;
 }
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin: -15px 0 13px 5px;
+  font-size:.8rem;
+`;
+
 export default function SignInPage() {
+  const schema = yup.object({
+    Email: yup.string().email("Format invalide").required("Entrez votre email"),
+    Password: yup.string().required("Entrez votre mot de passe"),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data) => console.log(data);
   console.log(errors);
@@ -122,6 +140,11 @@ export default function SignInPage() {
                             /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
                         })}
                       />
+
+{errors.Email && (
+              <ErrorMessage>{errors.Email.message}</ErrorMessage>
+            )}
+                      
                     </InputContainer>
                     <InputContainer>
                       <i>
@@ -137,6 +160,9 @@ export default function SignInPage() {
                           maxLength: 14,
                         })}
                       />
+                      {errors.Password && (
+              <ErrorMessage>{errors.Password.message}</ErrorMessage>
+            )}
                     </InputContainer>
             <SubmitButton primary="true" hover="true" onClick={onSubmit}>
               Connexion

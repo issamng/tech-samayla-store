@@ -1,6 +1,7 @@
 import Center from "@/components/Center";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Title from "@/components/Title";
 
 /* eslint-disable react/no-unescaped-entities */
 export default function RecruitmentPage() {
@@ -8,7 +9,7 @@ export default function RecruitmentPage() {
     <>
       <Header />
       <Center>
-        <h2>Recrutement </h2>
+        <Title>Recrutement</Title>
         <p>
           Nous vous remercions de l'intérêt que vous portez à notre entreprise.
           Actuellement, il n'y a aucun poste vacant dans notre équipe.

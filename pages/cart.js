@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
@@ -7,6 +8,7 @@ import Input from "@/components/Input";
 import Table from "@/components/Table";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -76,6 +78,16 @@ const CityHolder = styled.div`
 const th = styled.th`
   text-align: center;
   /* Ajoutez d'autres styles de th si nécessaire */
+`;
+
+const CartEmpty = styled(Link)`
+  text-decoration: none;
+  color: #29465b;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 export default function CartPage() {
@@ -183,68 +195,92 @@ export default function CartPage() {
       <Header />
       <Center>
         <ColumnsWrapper>
-          <Box>
-            <h2>Mon panier</h2>
-            {!cartProducts?.length && <div>Votre panier est vide</div>}
-            {products?.length > 0 && (
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Produit</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product, index) => (
-                    <tr key={index}>
-                      <ProductInfoCell>
-                        <ProductImageBox>
-                          <img src={product.images[0]} alt="" /> <br />
-                        </ProductImageBox>
+          <div>
+            <Box>
+              <h2>Mon panier</h2>
+              {!cartProducts?.length && (
+                <>
+                  <div>Oops, votre panier est vide. </div>
+                  <div style={{ marginTop: "10px" }}>
+                    Besoin d'inspiration? Explorez nos{" "}
+                    <CartEmpty href="/">nouveautés</CartEmpty> pour dénicher des
+                    trésors ou parcourez nos{" "}
+                    <CartEmpty href="/categories">rayons</CartEmpty> pour
+                    trouver l'article parfait. Bonne chasse aux pépites!
+                  </div>
+                </>
+              )}
+              {products?.length > 0 && (
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Produit</th>
+                      <th>Quantité</th>
+                      <th>Prix</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.map((product, index) => (
+                      <tr key={index}>
+                        <ProductInfoCell>
+                          <ProductImageBox>
+                            <img src={product.images[0]} alt="" /> <br />
+                          </ProductImageBox>
 
-                        <div>{product.title}</div>
-                      </ProductInfoCell>
-                      <td>
-                        <Button onClick={() => lessProduct(product._id)}>
-                          -
-                        </Button>
-                        <QuantityLabel>
-                          {
-                            cartProducts.filter((id) => id === product._id)
-                              .length
-                          }
-                        </QuantityLabel>
+                          <div>{product.title}</div>
+                        </ProductInfoCell>
+                        <td>
+                          <Button onClick={() => lessProduct(product._id)}>
+                            -
+                          </Button>
+                          <QuantityLabel>
+                            {
+                              cartProducts.filter((id) => id === product._id)
+                                .length
+                            }
+                          </QuantityLabel>
 
-                        <Button onClick={() => moreProduct(product._id)}>
-                          +
-                        </Button>
+                          <Button onClick={() => moreProduct(product._id)}>
+                            +
+                          </Button>
+                        </td>
+                        <td>
+                          {Number(
+                            (
+                              cartProducts.filter((id) => id === product._id)
+                                .length * product.prix
+                            ).toFixed(2)
+                          )}
+                          €
+                        </td>
+                      </tr>
+                    ))}
+                    <td></td>
+                    <td></td>
+                    <td style={{ fontWeight: "bold" }}>{roundedTotal}€</td>
+                    <tr>
+                      <td colSpan={2} style={{ textAlign: "right" }}>
+                        (Frais de livraison) :
                       </td>
-                      <td>
-                        {Number((cartProducts.filter((id) => id === product._id)
-                          .length * product.prix).toFixed(2))}
-                        €
+                      <td>{shippingFee}€</td>
+                    </tr>
+                    <tr>
+                      <td colSpan={2} style={{ textAlign: "right" }}>
+                        Total :
+                      </td>
+                      <td style={{ fontWeight: "bold" }}>
+                        {roundedTotal + parseInt(shippingFee || 0)}€
                       </td>
                     </tr>
-                  ))}
-                  <td></td>
-                  <td></td>
-                  <td style={{ fontWeight: "bold" }}>{roundedTotal}€</td>
-                  <tr>
-                    <td colSpan={2} style={{ textAlign: "right" }}>
-                      (Frais de livraison) :
-                    </td>
-                    <td>{shippingFee}€</td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2} style={{ textAlign: "right" }}>Total :</td>
-                    <td style={{ fontWeight: "bold" }}>{roundedTotal + parseInt(shippingFee || 0)}€</td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-          </Box>
+                  </tbody>
+                </Table>
+              )}
+            </Box>
+          </div>
+
+
           {!!cartProducts?.length && (
+            <div>
             <Box>
               <h2>Saisissez vos informations</h2>
 
@@ -304,6 +340,7 @@ export default function CartPage() {
                 Continuez vers le paiement
               </Button>
             </Box>
+            </div>
           )}
         </ColumnsWrapper>
       </Center>

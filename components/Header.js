@@ -126,11 +126,11 @@ export default function Header() {
           <Image src="/logofinal.png" alt="Logo" width={127} height={50} />
         </Logo>
         <StyledNav mobilenavactive={mobilenavactive}>
-          <NavLink href={"/"}>Accueil</NavLink>
-          <NavLink href={"/products"}>Tous les produits</NavLink>
-          <NavLink href={"/categories"}>Rayons</NavLink>
-          <NavLink href={"/account"}>Mon compte</NavLink>
-          <NavLink href={"/cart"}>Mon Panier ({cartProducts.length})</NavLink>
+          <NavLink href="/">Accueil</NavLink>
+          <NavLink href="/products">Tous les produits</NavLink>
+          <NavLink href="/categories">Rayons</NavLink>
+          <NavLink href="/account">Mon compte</NavLink>
+          <NavLink href="/cart">Mon Panier ({cartProducts.length})</NavLink>
           {/* <div><Button signin >Se connecter</Button></div>
            <div><Button signup>S&apos;inscrire</Button></div> */}
          

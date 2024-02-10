@@ -2,13 +2,14 @@
 import Center from "@/components/Center";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Title from "@/components/Title";
 
 export default function PrivacyPolicy() {
   return (
     <>
       <Header />
       <Center>
-        <h2>Politique de confidentialité </h2>
+        <Title>Politique de confidentialité</Title>
         <b>Collecte d'informations personnelles:</b>
         <p>
           Lorsque vous visitez notre site, nous recueillons des informations

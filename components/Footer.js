@@ -65,14 +65,14 @@ const SocialIconWrapper = styled.div`
   flex-direction: column;
   gap: 20px;
   justify-content: center;
-  margin-left:60px;
+  margin-left: 60px;
   /* margin-top: 40px; */
 
   @media screen and (max-width: 768px) {
     text-align: center;
     align-items: center;
     margin-bottom: 10px;
-    margin-left:0;
+    margin-left: 0;
   }
 `;
 
@@ -81,23 +81,25 @@ export default function Footer() {
     <StyledFooter>
       <LinksContainer>
         <div>
-          <FooterLink href={"/"}>Accueil</FooterLink>
-          <FooterLink href={"/categories"}>Rayons</FooterLink>
-          <FooterLink href={"/products"}>Tous les produits</FooterLink>
-          <FooterLink href={"/account"}>Mon compte</FooterLink>
-          <FooterLink href={"/search"}>Rechercher un produit</FooterLink>
+          <FooterLink href="/">Accueil</FooterLink>
+          <FooterLink href="/products">Tous les produits</FooterLink>
+          <FooterLink href="/categories">Rayons</FooterLink>
+          <FooterLink href="/account">Mon compte</FooterLink>
+          <FooterLink href="/search">Rechercher un produit</FooterLink>
         </div>
         <div>
-          <FooterLink href={"/quisommesnous"}>Qui sommes nous ?</FooterLink>
-          <FooterLink href={"/contact"}>Nous contacter</FooterLink>
-          <FooterLink href={"/recruitment"}>Recrutement</FooterLink>
-          <FooterLink href={"/privacypolicy"}>Politique de confidentialité</FooterLink>
-          <FooterLink href={"/delivery"}>Livraison</FooterLink>
+          <FooterLink href="/quisommesnous">Qui sommes nous ?</FooterLink>
+          <FooterLink href="/contact">Nous contacter</FooterLink>
+          <FooterLink href="/recruitment">Recrutement</FooterLink>
+          <FooterLink href="/privacypolicy">
+            Politique de confidentialité
+          </FooterLink>
+          <FooterLink href="/delivery">Livraison</FooterLink>
         </div>
         <div>
-          <FooterLink href={"/signup"}>Inscription</FooterLink>
-          <FooterLink href={"/signin"}>Connexion</FooterLink>
-          <FooterLink href={"/faq"}>FAQ</FooterLink>
+          <FooterLink href="/signup">Inscription</FooterLink>
+          <FooterLink href="/signin">Connexion</FooterLink>
+          <FooterLink href="/faq">FAQ</FooterLink>
         </div>
       </LinksContainer>
 

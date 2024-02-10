@@ -5,13 +5,16 @@ import Header from "@/components/Header";
 import Center from "@/components/Center";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
-import CircularJSON from 'circular-json';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import CircularJSON from "circular-json";
 
 const FormWrapper = styled.div`
   background-color: #f8f8f8;
   padding: 20px;
-  margin-top: 40px;
+  /* margin-top: 40px; */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 80px auto;
 `;
 
 const FormTitle = styled.h2`
@@ -28,7 +31,10 @@ const InputField = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
   font-family: inherit;
-  font-weight: 500;
+  &:active,
+  &:focus {
+    outline: none;
+  }
 `;
 
 const TextAreaField = styled.textarea`
@@ -41,7 +47,10 @@ const TextAreaField = styled.textarea`
   box-sizing: border-box;
   resize: none;
   font-family: inherit;
-  font-weight:500;
+  &:active,
+  &:focus {
+    outline: none;
+  }
 `;
 
 const SubmitButton = styled(Button)`
@@ -51,14 +60,31 @@ const SubmitButton = styled(Button)`
   cursor: pointer;
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin: -15px 0 13px 5px;
+  font-size:.8rem;
+`;
+
 export default function ContactPage() {
+
+  const schema = yup.object({
+    lastName: yup.string().max(50),
+    firstName: yup.string().required("Entrez votre prénom").max(50),
+    Email: yup.string().email("Format invalide").required("Entrez votre email"),
+    Objet: yup.string().max(100),
+    Message: yup.string().required("Entrez votre message"),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => console.log(data);
   console.log(errors);
 
   // const onSubmit = async (data) =>
@@ -75,21 +101,22 @@ export default function ContactPage() {
     <>
       <Header />
       <Center>
-       
         <FormWrapper>
-        <FormTitle>Nous contacter</FormTitle>
+          <FormTitle>Nous contacter</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
               type="text"
               placeholder="Nom"
-              {...register("Nom", { maxLength: 50 })}
-              
+              {...register("lastName", { maxLength: 50 })}
             />
             <InputField
               type="text"
               placeholder="Prenom"
-              {...register("Prenom", { required: true, maxLength: 50 })}
+              {...register("firstName", { required: true, maxLength: 50 })}
             />
+            {errors.firstName && (
+              <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+            )}
 
             <InputField
               type="email"
@@ -99,6 +126,10 @@ export default function ContactPage() {
                 pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
               })}
             />
+            {errors.Email && (
+              <ErrorMessage>{errors.Email.message}</ErrorMessage>
+            )}
+
             <InputField
               type="text"
               placeholder="Objet"
@@ -108,15 +139,16 @@ export default function ContactPage() {
               placeholder="Message"
               {...register("Message", { required: true })}
             />
+            <ErrorMessage>{errors.Message?.message}</ErrorMessage>
             <SubmitButton primary="true" hover="true" onClick={onSubmit}>
               Envoyer
             </SubmitButton>
           </form>
         </FormWrapper>
       </Center>
-      
+
       {/* <div style={{marginTop:'50px'}}><img src="advice.jpg" style={{ width: '50%', height: '350px' }} /> </div> */}
-      
+
       <Footer />
     </>
   );

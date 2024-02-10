@@ -1,5 +1,7 @@
 import Center from "@/components/Center";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Title from "@/components/Title";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -52,6 +54,22 @@ export default function FaqPage() {
       answer:
         "Oui, nous utilisons des technologies de cryptage sécurisées pour protéger vos informations de paiement. Votre sécurité est notre priorité.",
     },
+    {
+      question: "Pouvez-vous expédier vos produits à l'international ?",
+      answer:
+        "Oui, nous proposons la livraison internationale. Consultez les informations de livraison pour plus de détails.",
+    },
+    {
+      question: "Puis-je ajouter des articles à ma commande après l'avoir passée ?",
+      answer:
+"Malheureusement, une fois que la commande est confirmée, nous ne pouvons pas ajouter d'articles. Vous devrez passer une nouvelle commande pour les articles supplémentaires."    },
+
+    {
+      question:
+        "Comment puis-je contacter le service client en cas de problème ?",
+      answer:
+        "Vous pouvez nous contacter via notre formulaire de contact sur la page, Nous nous efforçons de répondre dans les plus brefs délais.",
+    },
   ];
 
   const handleToggle = (index) => {
@@ -63,7 +81,7 @@ export default function FaqPage() {
       <Header />
       <Center>
         <FAQContainer>
-          <h1>FAQ</h1>
+          <Title>FAQ</Title>
           {faqData.map((faq, index) => (
             <div key={index}>
               <Question onClick={() => handleToggle(index)}>
@@ -74,6 +92,7 @@ export default function FaqPage() {
           ))}
         </FAQContainer>
       </Center>
+      <Footer />
     </>
   );
 }

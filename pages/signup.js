@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import Center from "@/components/Center";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import CircularJSON from "circular-json";
 
 const FormWrapper = styled.div`
@@ -11,6 +13,11 @@ const FormWrapper = styled.div`
   padding: 20px;
   margin-top: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width:60%;
+  margin: 80px auto;
+  @media screen and (max-width: 768px) {
+    width:70%;
+  }
 `;
 
 const FormTitle = styled.h2`
@@ -22,10 +29,20 @@ const FormTitle = styled.h2`
 const InputField = styled.input`
   width: 100%;
   padding: 10px;
+  padding-left:0;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: none;
   box-sizing: border-box;
+  font-family: inherit;
+  background-color:#f8f8f8;
+  border-bottom: 2px solid #d1d1d4;
+  &:active,
+  &:hover,
+  &:focus {
+    outline: none;
+    border-bottom-color: #29465b;
+  }
+  
 `;
 
 const SubmitButton = styled(Button)`
@@ -35,12 +52,30 @@ const SubmitButton = styled(Button)`
   cursor: pointer;
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin: -15px 0 13px 1px;
+  font-size:.8rem;
+`;
+
 export default function SignUpPage() {
+  const schema = yup.object({
+    lastName: yup.string().required("Entrez votre nom").max(50),
+    firstName: yup.string().required("Entrez votre prénom").max(50),
+    Email: yup.string().email("Format invalide").required("Entrez votre email"),
+    Password: yup.string().required("Entrez votre mot de passe"),
+    PasswordConfirmation: yup
+      .string()
+      .required("Entrez a nouveau votre mot de passe"),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data) => console.log(data);
   console.log(errors);
@@ -59,33 +94,52 @@ export default function SignUpPage() {
     <>
       <Header />
       <Center>
-        
         <FormWrapper>
-        <FormTitle>Créer un compte</FormTitle>
+          <FormTitle>Créer un compte</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
               type="text"
               placeholder="Nom"
-              {...register("lastName", {})}
+              {...register("lastName", { required: true })}
             />
+            {errors.lastName && (
+              <ErrorMessage>{errors.lastName.message}</ErrorMessage>
+            )}
             <InputField
               type="text"
-              placeholder="Prenom"
+              placeholder="Prénom"
               {...register("firstName", { required: true })}
             />
+            {errors.firstName && (
+              <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+            )}
             <InputField
               type="email"
               placeholder="Email"
-              {...register("Email", { required: true, pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i })}
+              {...register("Email", {
+                required: true,
+                pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
+              })}
             />
+            {errors.Email && (
+              <ErrorMessage>{errors.Email.message}</ErrorMessage>
+            )}
             <InputField
               type="password"
               placeholder="Mot de passe"
-              {...register("Password", { required: true, max: 14, min: 6, maxLength: 14, })}
+              {...register("Password", {
+                required: true,
+                max: 14,
+                min: 6,
+                maxLength: 14,
+              })}
             />
+            {errors.Password && (
+              <ErrorMessage>{errors.Password.message}</ErrorMessage>
+            )}
             <InputField
               type="password"
-              placeholder="Entrez a nouveau votre mot de passe"
+              placeholder="Confirmez votre mot de passe"
               {...register("PasswordConfirmation", {
                 required: true,
                 max: 14,
@@ -93,6 +147,9 @@ export default function SignUpPage() {
                 maxLength: 14,
               })}
             />
+            {errors.PasswordConfirmation && (
+              <ErrorMessage>{errors.PasswordConfirmation.message}</ErrorMessage>
+            )}
 
             <SubmitButton primary="true" hover="true" onClick={onSubmit}>
               Inscription
