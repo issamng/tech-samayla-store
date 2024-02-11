@@ -58,7 +58,7 @@ const InputField = styled.input`
   &:hover,
   &:focus {
     outline: none;
-    border-bottom-color: #29465B;
+    border-bottom-color: #29465b;
   }
 `;
 
@@ -66,7 +66,7 @@ const SubmitButton = styled(Button)`
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  margin-top:5px;
+  margin-top: 5px;
   justify-content: center;
   cursor: pointer;
 `;
@@ -74,15 +74,15 @@ const SubmitButton = styled(Button)`
 const ConnectGoogle = styled.button`
   display: flex;
   align-items: center;
-  justify-content:center;
-  width:100%;
+  justify-content: center;
+  width: 100%;
   background-color: white;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   border: 1px solid #aaa;
   gap: 3px;
-  margin-bottom:15px;
-  font-family:inherit;
+  margin-bottom: 15px;
+  font-family: inherit;
   cursor: pointer;
   svg {
     height: 20px;
@@ -90,12 +90,17 @@ const ConnectGoogle = styled.button`
 `;
 
 const SignUp = styled(Link)`
-text-decoration: none;
-color:#29465b;
-font-weight: bold;
-&:hover{
+  text-decoration: none;
+  color: #29465b;
+  font-weight: bold;
+  &:hover {
     text-decoration: underline;
-}
+  }
+`;
+
+const SuccessMessage = styled.div`
+  color: green;
+  margin-top: 10px;
 `;
 
 export default function AccountPage() {
@@ -108,7 +113,7 @@ export default function AccountPage() {
   const [adress, setAdress] = useState("");
   const [country, setCountry] = useState("");
   // State to show account form only if informations fetched
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
   // Orders pre loader
   // const [orderLoaded, setOrderLoaded] = useState(true);
   // State to show wishlist product on the account page
@@ -117,6 +122,8 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState("Commandes");
   // State for orders on account page
   const [orders, setOrders] = useState([]);
+  //Success message after user save informations
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -139,7 +146,21 @@ export default function AccountPage() {
       postalCode,
       country,
     };
-    axios.put("/api/userInformation", data);
+    // axios.put("/api/userInformation", data);
+    axios
+      .put("/api/userInformation", data)
+      .then(() => {
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000); // Affiche le message pendant 3 secondes
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la mise à jour des informations :",
+          error
+        );
+      });
   }
 
   useEffect(() => {
@@ -153,7 +174,7 @@ export default function AccountPage() {
         setPostalCode(response.data.postalCode);
         setAdress(response.data.adress);
         setCountry(response.data.country);
-        setLoaded(true);
+        // setLoaded(true);
       });
       // Wishlist on account page
       axios.get("/api/wishlist").then((response) => {
@@ -219,12 +240,15 @@ export default function AccountPage() {
               {activeTab === "Commandes" && (
                 <>
                   <div>
-                  {!session  && ( 
-                        <p>Connectez-vous pour afficher vos commandes</p>
-                      )}
+                    {!session && (
+                      <p>Connectez-vous pour afficher vos commandes</p>
+                    )}
 
                     {orders.length === 0 && (
-                      <>{session && <p>Vous n'avez pas encore passé de commandes.</p> } 
+                      <>
+                        {session && (
+                          <p>Vous n'avez pas encore passé de commandes.</p>
+                        )}
                       </>
                     )}
                     {orders.length > 0 &&
@@ -322,6 +346,11 @@ export default function AccountPage() {
                   >
                     Enregistrer
                   </Button>
+                  {showSuccessMessage && (
+                    <SuccessMessage>
+                      Informations enregistrées avec succès!
+                    </SuccessMessage>
+                  )}
                   <hr />
                 </>
               )}
@@ -398,7 +427,10 @@ export default function AccountPage() {
                     Se connecter avec Google
                   </ConnectGoogle>
 
-                  <div>Vous n&apos;avez pas encore de compte? <SignUp href="/signup">Inscrivez-vous</SignUp></div>
+                  <div>
+                    Vous n&apos;avez pas encore de compte?{" "}
+                    <SignUp href="/signup">Inscrivez-vous</SignUp>
+                  </div>
 
                   {/* <Button primary="true" onClick={login}>
                     Me connecter avec Google
