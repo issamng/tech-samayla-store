@@ -99,9 +99,10 @@ const SignUp = styled(Link)`
 `;
 
 const SuccessMessage = styled.div`
-  color: green;
+  color: #008000;
   margin-top: 10px;
   font-weight:bold;
+  font-size:0.9rem;
 `;
 
 export default function AccountPage() {
@@ -125,6 +126,7 @@ export default function AccountPage() {
   const [orders, setOrders] = useState([]);
   //Success message after user save informations
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [loading, setLoading] = useState(true);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -147,14 +149,13 @@ export default function AccountPage() {
       postalCode,
       country,
     };
-    // axios.put("/api/userInformation", data);
     axios
       .put("/api/userInformation", data)
       .then(() => {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-        }, 10000000); // Affiche le message pendant 3 secondes
+        }, 3000); 
       })
       .catch((error) => {
         console.error(
@@ -166,6 +167,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (session) {
+      setLoading(true);
       // setOrderLoaded(false);
       axios.get("/api/userInformation").then((response) => {
         setFirstName(response.data.firstName);
@@ -186,6 +188,7 @@ export default function AccountPage() {
         setOrders(response.data);
         // setOrderLoaded(true);
       });
+      setLoading(false);
     }
   }, [session]);
 
@@ -230,6 +233,9 @@ export default function AccountPage() {
     <>
       <Header />
       <Center>
+      {/* {loading ? (
+        <Spinner /> 
+      ) : ( */}
         <ColsWrapper>
           <div>
             <WhiteBox>
@@ -441,6 +447,7 @@ export default function AccountPage() {
             </WhiteBox>
           </div>
         </ColsWrapper>
+        {/* )} */}
       </Center>
       <Footer />
     </>
