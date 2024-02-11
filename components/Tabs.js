@@ -4,6 +4,7 @@ const StyledTabs = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+  margin-top:15px;
 `;
 
 const StyledTab = styled.span`

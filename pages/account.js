@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import UserIcon from "@/components/icons/UserIcon";
 import PasswordIcon from "@/components/icons/PasswordIcon";
 import Link from "next/link";
+import Title from "@/components/Title";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -126,7 +127,8 @@ export default function AccountPage() {
   const [orders, setOrders] = useState([]);
   //Success message after user save informations
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [loading, setLoading] = useState(true);
+  //Spinner 
+  // const [loading, setLoading] = useState(true);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -167,7 +169,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (session) {
-      setLoading(true);
+      // setLoading(true);
       // setOrderLoaded(false);
       axios.get("/api/userInformation").then((response) => {
         setFirstName(response.data.firstName);
@@ -188,7 +190,7 @@ export default function AccountPage() {
         setOrders(response.data);
         // setOrderLoaded(true);
       });
-      setLoading(false);
+      // setLoading(false);
     }
   }, [session]);
 
@@ -292,7 +294,8 @@ export default function AccountPage() {
             <WhiteBox>
               {session && (
                 <>
-                  <h2>Informations sur votre compte</h2>
+                <Title>Informations sur votre compte</Title>
+                  
                   <Input
                     type="text"
                     placeholder="Nom"
@@ -369,7 +372,8 @@ export default function AccountPage() {
               )}
               {!session && (
                 <>
-                  <h2>Connectez-vous</h2>
+                <Title>Connectez-vous</Title>
+                  
 
                   {/* login form  */}
                   <form onSubmit={handleSubmit(onSubmit)}>
