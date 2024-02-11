@@ -174,12 +174,12 @@ export default function CartPage() {
       <>
         <Header />
         <Center>
-          <Box style={{ marginTop: 40 }}>
+          <WhiteBox style={{ marginTop: 40 }}>
             <h1>Merci pour votre commande!</h1>
             <p>
               Vous serez notifié par email lors de lenvoi de votre commande.
             </p>
-          </Box>
+          </WhiteBox>
         </Center>
         <Footer />
       </>
