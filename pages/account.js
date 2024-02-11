@@ -101,6 +101,7 @@ const SignUp = styled(Link)`
 const SuccessMessage = styled.div`
   color: green;
   margin-top: 10px;
+  font-weight:bold;
 `;
 
 export default function AccountPage() {
@@ -153,7 +154,7 @@ export default function AccountPage() {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-        }, 3000); // Affiche le message pendant 3 secondes
+        }, 10000000); // Affiche le message pendant 3 secondes
       })
       .catch((error) => {
         console.error(
