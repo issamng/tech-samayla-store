@@ -219,8 +219,13 @@ export default function AccountPage() {
               {activeTab === "Commandes" && (
                 <>
                   <div>
+                  {!session  && ( 
+                        <p>Connectez-vous pour afficher vos commandes</p>
+                      )}
+
                     {orders.length === 0 && (
-                      <p>Connectez-vous pour afficher vos commandes.</p>
+                      <>{session && <p>Vous n'avez pas encore passé de commandes.</p> } 
+                      </>
                     )}
                     {orders.length > 0 &&
                       orders.map((o) => <OrdersList key={o._id} {...o} />)}
@@ -254,7 +259,7 @@ export default function AccountPage() {
           </div>
           <div>
             <WhiteBox>
-              {loaded && (
+              {session && (
                 <>
                   <h2>Informations sur votre compte</h2>
                   <Input
