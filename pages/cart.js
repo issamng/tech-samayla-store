@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import Table from "@/components/Table";
+import Title from "@/components/Title";
+import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -20,12 +22,6 @@ const ColumnsWrapper = styled.div`
   }
   gap: 40px;
   margin-top: 40px;
-`;
-
-const Box = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 30px;
 `;
 
 const ProductInfoCell = styled.td`
@@ -196,8 +192,8 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper>
           <div>
-            <Box>
-              <h2>Mon panier</h2>
+            <WhiteBox>
+              <Title>Mon panier</Title>
               {!cartProducts?.length && (
                 <>
                   <div>Oops, votre panier est vide. </div>
@@ -275,71 +271,69 @@ export default function CartPage() {
                   </tbody>
                 </Table>
               )}
-            </Box>
+            </WhiteBox>
           </div>
-
 
           {!!cartProducts?.length && (
             <div>
-            <Box>
-              <h2>Saisissez vos informations</h2>
-
-              <Input
-                type="text"
-                placeholder="Nom"
-                value={firstName}
-                name="firstName"
-                onChange={(ev) => setFirstName(ev.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="Prénom"
-                value={lastName}
-                name="lastName"
-                onChange={(ev) => setLastName(ev.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="Email"
-                value={email}
-                name="email"
-                onChange={(ev) => setEmail(ev.target.value)}
-              />
-              <CityHolder>
+              <WhiteBox>
+                <Title>Saisissez vos informations</Title>
                 <Input
                   type="text"
-                  placeholder="Ville"
-                  value={city}
-                  name="city"
-                  onChange={(ev) => setCity(ev.target.value)}
+                  placeholder="Nom"
+                  value={firstName}
+                  name="firstName"
+                  onChange={(ev) => setFirstName(ev.target.value)}
                 />
                 <Input
                   type="text"
-                  placeholder="Code postal"
-                  value={postalCode}
-                  name="postalCode"
-                  onChange={(ev) => setPostalCode(ev.target.value)}
+                  placeholder="Prénom"
+                  value={lastName}
+                  name="lastName"
+                  onChange={(ev) => setLastName(ev.target.value)}
                 />
-              </CityHolder>
+                <Input
+                  type="text"
+                  placeholder="Email"
+                  value={email}
+                  name="email"
+                  onChange={(ev) => setEmail(ev.target.value)}
+                />
+                <CityHolder>
+                  <Input
+                    type="text"
+                    placeholder="Ville"
+                    value={city}
+                    name="city"
+                    onChange={(ev) => setCity(ev.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Code postal"
+                    value={postalCode}
+                    name="postalCode"
+                    onChange={(ev) => setPostalCode(ev.target.value)}
+                  />
+                </CityHolder>
 
-              <Input
-                type="text"
-                placeholder="Adresse"
-                value={adress}
-                name="adress"
-                onChange={(ev) => setAdress(ev.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="Pays"
-                value={country}
-                name="country"
-                onChange={(ev) => setCountry(ev.target.value)}
-              />
-              <Button black="true" block="true" onClick={goToPayment}>
-                Continuez vers le paiement
-              </Button>
-            </Box>
+                <Input
+                  type="text"
+                  placeholder="Adresse"
+                  value={adress}
+                  name="adress"
+                  onChange={(ev) => setAdress(ev.target.value)}
+                />
+                <Input
+                  type="text"
+                  placeholder="Pays"
+                  value={country}
+                  name="country"
+                  onChange={(ev) => setCountry(ev.target.value)}
+                />
+                <Button black="true" block="true" onClick={goToPayment}>
+                  Continuez vers le paiement
+                </Button>
+              </WhiteBox>
             </div>
           )}
         </ColumnsWrapper>

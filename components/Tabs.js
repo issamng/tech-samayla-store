@@ -8,7 +8,7 @@ const StyledTabs = styled.div`
 `;
 
 const StyledTab = styled.span`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
   ${(props) =>
     props.active

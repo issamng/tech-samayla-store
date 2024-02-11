@@ -24,8 +24,8 @@ const FormWrapper = styled.div`
  
 `;
 
-const FormTitle = styled.h2`
-  font-size: 24px;
+const FormTitle = styled.h1`
+  font-size: 1.2rem;
   margin-bottom: 20px;
   text-align: center;
 `;

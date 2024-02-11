@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { WishedProduct } from "@/models/WishedProduct";
 import { mongooseConnect } from "@/lib/mongoose";
+import Title from "@/components/Title";
 
 const CategoryGrid = styled.div`
   display: grid;
@@ -62,7 +63,8 @@ export default function CategoriesPage({
         {mainCategories.map((cat) => (
           <CategoryWrapper key={cat._id}>
             <CategoryTitle>
-              <h2>{cat.name}</h2>
+              <Title>{cat.name}</Title>
+              <h2></h2>
               <div>
                 <Link href={"/category/" + cat._id}>Afficher tout</Link>
               </div>

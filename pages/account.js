@@ -250,7 +250,7 @@ export default function AccountPage() {
                 <>
                   <div>
                     {!session && (
-                      <p>Connectez-vous pour afficher vos commandes</p>
+                      <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
                     {orders.length === 0 && (
