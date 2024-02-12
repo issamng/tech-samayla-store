@@ -165,7 +165,7 @@ export default function AccountPage() {
   useEffect(() => {
     const fetchData = async () => {
       
-      if (session) {
+      if (session !== undefined && session) {
         setLoading(true);
         try {
           const ordersResponse = await axios.get("api/orders");
