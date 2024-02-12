@@ -164,9 +164,8 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
-      if (session !== undefined && session) {
-        setLoading(true);
+      setLoading(true);
+      if (session) {
         try {
           const ordersResponse = await axios.get("api/orders");
           setOrders(ordersResponse.data);
@@ -184,11 +183,9 @@ export default function AccountPage() {
 
           const wishlistResponse = await axios.get("/api/wishlist");
           setWishedProducts(wishlistResponse.data.map((wp) => wp.product));
-
-          
         } catch (error) {
           console.error("Error fetching data:", error);
-        }    finally {
+        } finally {
           setLoading(false);
         }
       } else {
@@ -196,7 +193,6 @@ export default function AccountPage() {
       }
     };
     fetchData();
-   
   }, [session]);
 
   // When remove product from wishlist (from the acount page)
