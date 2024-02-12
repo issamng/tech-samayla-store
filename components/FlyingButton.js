@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Button, { ButtonStyle } from "./Button";
-// import FlyingButtonOriginal from "react-flying-item";
 import { useContext, useEffect, useRef, useState } from "react";
 import { CartContext } from "./CartContext";
 

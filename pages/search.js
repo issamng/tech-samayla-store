@@ -45,7 +45,7 @@ export default function SearchPage() {
       debouncedSearch(phrase);
     } else {
       setProducts([]);
-      setIsLoading(false); // Ensure to set isLoading to false when there is no search phrase
+      setIsLoading(false); 
     }
   }, [debouncedSearch, phrase]);
 

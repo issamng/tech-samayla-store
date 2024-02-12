@@ -18,7 +18,7 @@ const FormWrapper = styled.div`
 `;
 
 const FormTitle = styled.h2`
-  font-size: 24px;
+  font-size: 1.3rem;
   margin-bottom: 20px;
   text-align: center;
 `;

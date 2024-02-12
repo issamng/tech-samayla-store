@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export default function UserIcon({ className = "w-6 h-6" }) {
-
-const UserIcon = styled.svg`
+const StyledUserIcon = styled.svg`
 position: absolute;
 width: 20px;
 height: 22px;
@@ -10,9 +8,11 @@ color:#aaa;
 top:7px;
 `;
 
+export default function UserIcon({ className = "w-6 h-6" }) {
 
   return (
-    <UserIcon>
+
+    <StyledUserIcon>
  <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -25,7 +25,7 @@ top:7px;
         clipRule="evenodd"
       />
     </svg>
-    </UserIcon>
+    </StyledUserIcon>
    
   );
 }

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-export default function UserIcon({ className = "w-6 h-6" }) {
-  const PasswordIcon = styled.svg`
+const StyledPasswordIcon = styled.svg`
     position: absolute;
     width: 20px;
     height: 22px;
@@ -9,8 +8,11 @@ export default function UserIcon({ className = "w-6 h-6" }) {
     top: 7px;
   `;
 
+export default function UserIcon({ className = "w-6 h-6" }) {
+  
+
   return (
-    <PasswordIcon>
+    <StyledPasswordIcon>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -23,6 +25,6 @@ export default function UserIcon({ className = "w-6 h-6" }) {
           clipRule="evenodd"
         />
       </svg>
-    </PasswordIcon>
+    </StyledPasswordIcon>
   );
 }

@@ -6,7 +6,6 @@ import Header from "@/components/Header";
 import Input from "@/components/Input";
 import OrdersList from "@/components/OrdersList";
 import ProductBox from "@/components/ProductBox";
-import Spinner from "@/components/Spinner";
 import Tabs from "@/components/Tabs";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
@@ -65,9 +64,8 @@ const InputField = styled.input`
 
 const SubmitButton = styled(Button)`
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem 1rem;
   margin-bottom: 15px;
-  margin-top: 5px;
   justify-content: center;
   cursor: pointer;
 `;
@@ -122,7 +120,8 @@ export default function AccountPage() {
   // State to show wishlist product on the account page
   const [wishedProducts, setWishedProducts] = useState([]);
   // State for tabs on account page
-  const [activeTab, setActiveTab] = useState("Commandes");
+  // const [activeTab, setActiveTab] = useState(true);
+  const [activeTabName, setActiveTabName] = useState("Mes commandes");
   // State for orders on account page
   const [orders, setOrders] = useState([]);
   //Success message after user save informations
@@ -242,11 +241,11 @@ export default function AccountPage() {
           <div>
             <WhiteBox>
               <Tabs
-                tabs={["Commandes", "Liste d'envies"]}
-                active={activeTab}
-                onChange={setActiveTab}
+                tabs={["Mes commandes", "Ma liste d'envies"]}
+                $active={activeTabName}
+                onChange={setActiveTabName}
               />
-              {activeTab === "Commandes" && (
+              {activeTabName === "Mes commandes" && (
                 <>
                   <div>
                     {!session && (
@@ -265,7 +264,7 @@ export default function AccountPage() {
                   </div>
                 </>
               )}
-              {activeTab === "Liste d'envies" && (
+              {activeTabName === "Ma liste d'envies" && (
                 <>
                   <WishedProductsGrid>
                     {wishedProducts.length > 0 &&
@@ -294,7 +293,7 @@ export default function AccountPage() {
             <WhiteBox>
               {session && (
                 <>
-                <Title>Informations sur votre compte</Title>
+                <Title>Mes informations personnelles</Title>
                   
                   <Input
                     type="text"
@@ -366,7 +365,7 @@ export default function AccountPage() {
               )}
 
               {session && (
-                <Button primary="true" hover={1} onClick={logout}>
+                <Button primary="true" hover="true" onClick={logout}>
                   Me déconnecter
                 </Button>
               )}
@@ -407,8 +406,7 @@ export default function AccountPage() {
                       />
                     </InputContainer>
                     <SubmitButton
-                      primary="true"
-                      hover="true"
+                       primary="true" hover="true"
                       onClick={onSubmit}
                     >
                       Connexion

@@ -38,7 +38,7 @@ const Wrapper = styled.div`
 const StyledNav = styled.nav`
   //responsive
   ${(props) =>
-    props.mobilenavactive
+    props.$mobilenavactive
       ? `
   display: block;
   `
@@ -125,7 +125,7 @@ export default function Header() {
         <Logo href={"/"}>
           <Image src="/logofinal.png" alt="Logo" width={127} height={50} />
         </Logo>
-        <StyledNav mobilenavactive={mobilenavactive}>
+        <StyledNav $mobilenavactive={mobilenavactive}>
           <NavLink href="/">Accueil</NavLink>
           <NavLink href="/products">Tous les produits</NavLink>
           <NavLink href="/categories">Rayons</NavLink>

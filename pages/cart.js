@@ -2,9 +2,10 @@
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import Spinner from "@/components/Spinner";
 import Table from "@/components/Table";
 import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
@@ -101,19 +102,33 @@ export default function CartPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   // Shipping fee
   const [shippingFee, setShippingFee] = useState(null);
-  //Afficher les commandes dans le box Panier
+  //Spinner before displaying products in cart page
+  const [loading, setLoading] = useState(true);
+  //Display products in cart box
   useEffect(() => {
+    
+
     if (cartProducts.length > 0) {
-      axios.post("/api/cart", { ids: cartProducts }).then((response) => {
-        setProducts(response.data);
-      });
+      setLoading(true);
+      axios
+        .post("/api/cart", { ids: cartProducts })
+        .then((response) => {
+          setProducts(response.data);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     } else {
       setProducts([]);
+      setLoading(false);
+      
     }
   }, [cartProducts]);
-  //Vider le panier après la confirmation du paiement
+  //Empty Cart after payment confirmation
   useEffect(() => {
-    if (typeof window === "undefined") {
+    let isMounted = true;
+
+    if (typeof window === "undefined" || !isMounted) {
       return;
     }
     if (window?.location.href.includes("success")) {
@@ -127,6 +142,8 @@ export default function CartPage() {
     });
 
     if (session) {
+      
+      
       axios.get("/api/userInformation").then((response) => {
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
@@ -136,15 +153,24 @@ export default function CartPage() {
         setAdress(response.data.adress);
         setCountry(response.data.country);
       });
+      
     }
-  }, [clearCart, session]);
 
-  function moreProduct(id) {
-    addProduct(id);
+    return () => {
+      isMounted = false;
+    };
+  }, [clearCart, session, setIsSuccess]);
+
+  async function moreProduct(id) {
+    await addProduct(id);
+    setLoading(false);
   }
-  function lessProduct(id) {
-    removeProduct(id);
+
+  async function lessProduct(id) {
+    await removeProduct(id);
+    setLoading(false);
   }
+
   async function goToPayment() {
     const response = await axios.post("/api/checkout", {
       firstName,
@@ -181,7 +207,7 @@ export default function CartPage() {
             </p>
           </WhiteBox>
         </Center>
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
@@ -192,21 +218,33 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper>
           <div>
+          
             <WhiteBox>
               <Title>Mon panier</Title>
-              {!cartProducts?.length && (
-                <>
-                  <div>Oops, votre panier est vide. </div>
-                  <div style={{ marginTop: "10px" }}>
+
+              {!loading && !cartProducts?.length && (
+                
+                  <><div>Oops, votre panier est vide. </div><div style={{ marginTop: "10px" }}>
                     Besoin d'inspiration? Explorez nos{" "}
                     <CartEmpty href="/">nouveautés</CartEmpty> pour dénicher des
                     trésors ou parcourez nos{" "}
                     <CartEmpty href="/categories">rayons</CartEmpty> pour
                     trouver l'article parfait. Bonne chasse aux pépites!
-                  </div>
-                </>
+                  </div></>
+                  
               )}
-              {products?.length > 0 && (
+
+
+
+
+              {loading && <Spinner fullWidth={true}  />}
+
+
+              
+
+              { products?.length > 0 && (
+                <>
+                
                 <Table>
                   <thead>
                     <tr>
@@ -216,8 +254,8 @@ export default function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product, index) => (
-                      <tr key={index}>
+                    {products.map((product) => (
+                      <tr key={product._id}>
                         <ProductInfoCell>
                           <ProductImageBox>
                             <img src={product.images[0]} alt="" /> <br />
@@ -251,9 +289,19 @@ export default function CartPage() {
                         </td>
                       </tr>
                     ))}
-                    <td></td>
-                    <td></td>
-                    <td style={{ fontWeight: "bold" }}>{roundedTotal}€</td>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        style={{
+                          textAlign: "right",
+                          fontWeight: "bold",
+                          paddingRight: "12px",
+                          // textAlign: "center"
+                        }}
+                      >
+                        {roundedTotal}€
+                      </td>
+                    </tr>
                     <tr>
                       <td colSpan={2} style={{ textAlign: "right" }}>
                         (Frais de livraison) :
@@ -270,11 +318,14 @@ export default function CartPage() {
                     </tr>
                   </tbody>
                 </Table>
+                </>
               )}
             </WhiteBox>
           </div>
+          
 
-          {!!cartProducts?.length && (
+          { !!cartProducts?.length && (
+            <>
             <div>
               <WhiteBox>
                 <Title>Saisissez vos informations</Title>
@@ -334,11 +385,24 @@ export default function CartPage() {
                   Continuez vers le paiement
                 </Button>
               </WhiteBox>
+          
             </div>
+            </>
           )}
-        </ColumnsWrapper>
-      </Center>
-      <Footer />
-    </>
-  );
-}
+          
+          </ColumnsWrapper>
+          </Center>
+          
+
+
+
+</>
+
+
+  ); // Return
+
+
+
+
+
+} // Funtction close 

@@ -21,7 +21,7 @@ const FormWrapper = styled.div`
 `;
 
 const FormTitle = styled.h1`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 20px;
   text-align: center;
 `;
@@ -47,7 +47,7 @@ const InputField = styled.input`
 
 const SubmitButton = styled(Button)`
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem 1rem;
   justify-content: center;
   cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import { BounceLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -14,7 +14,7 @@ justify-content: center;
 export default function Spinner({ fullWidth }) {
   return (
     <Wrapper fullWidth={fullWidth}>
-      <BounceLoader speedMultiplier={3} color={"#555"} />
+      <PulseLoader speedMultiplier={2} color={"#29465B"} />
     </Wrapper>
   );
 }
