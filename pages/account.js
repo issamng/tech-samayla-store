@@ -169,10 +169,12 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-setLoading(true);
+      setLoading(true);
       if (session) {
         try {
-          const userInformationResponse = await axios.get("/api/userInformation");
+          const userInformationResponse = await axios.get(
+            "/api/userInformation"
+          );
           setFirstName(userInformationResponse.data.firstName);
           setLastName(userInformationResponse.data.lastName);
           setEmail(userInformationResponse.data.email);
@@ -180,24 +182,21 @@ setLoading(true);
           setPostalCode(userInformationResponse.data.postalCode);
           setAdress(userInformationResponse.data.adress);
           setCountry(userInformationResponse.data.country);
-          
-  
+
           const wishlistResponse = await axios.get("/api/wishlist");
           setWishedProducts(wishlistResponse.data.map((wp) => wp.product));
-          
+
           const ordersResponse = await axios.get("api/orders");
           setOrders(ordersResponse.data);
         } catch (error) {
           console.error("Error fetching data:", error);
-        } 
+        }
       }
     };
-    
+
     fetchData();
     setLoading(false);
-    
   }, [session]);
-  
 
   // When remove product from wishlist (from the acount page)
   function productRemovedFromWishlist(idToRemove) {
@@ -220,7 +219,6 @@ setLoading(true);
     <>
       <Header />
       <Center>
-     
         <ColsWrapper>
           <div>
             <WhiteBox>
@@ -232,28 +230,23 @@ setLoading(true);
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    { !session && !loading &&  (
+                    {!session && !loading && orders.length === 0 && (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
-                    {orders.length === 0 && !loading && (
-                      <>
-                        {session && (
-                          <p>Vous n'avez pas encore passé de commandes.</p>
-                        )}
-                      </>
+                    {orders.length === 0 && !loading && session && (
+                      <p>Vous n'avez pas encore passé de commandes.</p>
                     )}
-                    </div>
+                  </div>
 
                   <div>
-                  {loading && session ? (
+                    {loading && session ? (
                       <Spinner fullWidth={true} />
                     ) : (
                       orders.length > 0 &&
                       orders.map((o) => <OrdersList key={o._id} {...o} />)
                     )}
                   </div>
-                
                 </>
               )}
               {activeTabName === "Ma liste d'envies" && (
@@ -361,7 +354,7 @@ setLoading(true);
                   Me déconnecter
                 </Button>
               )}
-              {!session && (
+              {!session && !loading && (
                 <>
                   <Title>Connectez-vous</Title>
 
