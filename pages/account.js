@@ -231,7 +231,7 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    {!session && !loading && (
+                    {orders.length === 0 && !loading && !session && (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
