@@ -295,7 +295,7 @@ export default function CartPage() {
                         style={{
                           textAlign: "right",
                           fontWeight: "bold",
-                          paddingRight: "12px",
+                          paddingRight: "10px",
                           // textAlign: "center"
                         }}
                       >
