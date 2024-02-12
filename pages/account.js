@@ -114,14 +114,9 @@ export default function AccountPage() {
   const [postalCode, setPostalCode] = useState("");
   const [adress, setAdress] = useState("");
   const [country, setCountry] = useState("");
-  // State to show account form only if informations fetched
-  // const [loaded, setLoaded] = useState(false);
-  // Orders pre loader
-  // const [orderLoaded, setOrderLoaded] = useState(true);
   // State to show wishlist product on the account page
   const [wishedProducts, setWishedProducts] = useState([]);
   // State for tabs on account page
-  // const [activeTab, setActiveTab] = useState(true);
   const [activeTabName, setActiveTabName] = useState("Mes commandes");
   // State for orders on account page
   const [orders, setOrders] = useState([]);
@@ -169,9 +164,13 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      
       if (session) {
+        setLoading(true);
         try {
+          const ordersResponse = await axios.get("api/orders");
+          setOrders(ordersResponse.data);
+
           const userInformationResponse = await axios.get(
             "/api/userInformation"
           );
@@ -186,16 +185,18 @@ export default function AccountPage() {
           const wishlistResponse = await axios.get("/api/wishlist");
           setWishedProducts(wishlistResponse.data.map((wp) => wp.product));
 
-          const ordersResponse = await axios.get("api/orders");
-          setOrders(ordersResponse.data);
+          
         } catch (error) {
           console.error("Error fetching data:", error);
+        }    finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
-
     fetchData();
-    setLoading(false);
+   
   }, [session]);
 
   // When remove product from wishlist (from the acount page)
@@ -240,7 +241,7 @@ export default function AccountPage() {
                   </div>
 
                   <div>
-                    {loading && session ? (
+                    {loading ? (
                       <Spinner fullWidth={true} />
                     ) : (
                       orders.length > 0 &&
