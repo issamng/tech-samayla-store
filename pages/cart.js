@@ -106,8 +106,6 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true);
   //Display products in cart box
   useEffect(() => {
-    
-
     if (cartProducts.length > 0) {
       setLoading(true);
       axios
@@ -121,7 +119,6 @@ export default function CartPage() {
     } else {
       setProducts([]);
       setLoading(false);
-      
     }
   }, [cartProducts]);
   //Empty Cart after payment confirmation
@@ -142,8 +139,6 @@ export default function CartPage() {
     });
 
     if (session) {
-      
-      
       axios.get("/api/userInformation").then((response) => {
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
@@ -153,7 +148,6 @@ export default function CartPage() {
         setAdress(response.data.adress);
         setCountry(response.data.country);
       });
-      
     }
 
     return () => {
@@ -218,191 +212,168 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper>
           <div>
-          
             <WhiteBox>
               <Title>Mon panier</Title>
 
               {!loading && !cartProducts?.length && (
-                
-                  <><div>Oops, votre panier est vide. </div><div style={{ marginTop: "10px" }}>
+                <>
+                  <div>Oops, votre panier est vide. </div>
+                  <div style={{ marginTop: "10px" }}>
                     Besoin d'inspiration? Explorez nos{" "}
                     <CartEmpty href="/">nouveautés</CartEmpty> pour dénicher des
                     trésors ou parcourez nos{" "}
                     <CartEmpty href="/categories">rayons</CartEmpty> pour
                     trouver l'article parfait. Bonne chasse aux pépites!
-                  </div></>
-                  
+                  </div>
+                </>
               )}
 
+              {loading && <Spinner fullWidth={true} />}
 
-
-
-              {loading && <Spinner fullWidth={true}  />}
-
-
-              
-
-              { products?.length > 0 && (
+              {products?.length > 0 && (
                 <>
-                
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Produit</th>
-                      <th>Quantité</th>
-                      <th>Prix</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((product) => (
-                      <tr key={product._id}>
-                        <ProductInfoCell>
-                          <ProductImageBox>
-                            <img src={product.images[0]} alt="" /> <br />
-                          </ProductImageBox>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((product) => (
+                        <tr key={product._id}>
+                          <ProductInfoCell>
+                            <ProductImageBox>
+                              <img src={product.images[0]} alt="" /> <br />
+                            </ProductImageBox>
 
-                          <div>{product.title}</div>
-                        </ProductInfoCell>
-                        <td>
-                          <Button onClick={() => lessProduct(product._id)}>
-                            -
-                          </Button>
-                          <QuantityLabel>
-                            {
-                              cartProducts.filter((id) => id === product._id)
-                                .length
-                            }
-                          </QuantityLabel>
+                            <div>{product.title}</div>
+                          </ProductInfoCell>
+                          <td>
+                            <Button onClick={() => lessProduct(product._id)}>
+                              -
+                            </Button>
+                            <QuantityLabel>
+                              {
+                                cartProducts.filter((id) => id === product._id)
+                                  .length
+                              }
+                            </QuantityLabel>
 
-                          <Button onClick={() => moreProduct(product._id)}>
-                            +
-                          </Button>
-                        </td>
-                        <td>
-                          {Number(
-                            (
-                              cartProducts.filter((id) => id === product._id)
-                                .length * product.prix
-                            ).toFixed(2)
-                          )}
-                          €
+                            <Button onClick={() => moreProduct(product._id)}>
+                              +
+                            </Button>
+                          </td>
+                          <td>
+                            {Number(
+                              (
+                                cartProducts.filter((id) => id === product._id)
+                                  .length * product.prix
+                              ).toFixed(2)
+                            )}
+                            €
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {roundedTotal}€
                         </td>
                       </tr>
-                    ))}
-                    <tr>
-                      <td
-                        colSpan={3}
-                        style={{
-                          textAlign: "right",
-                          fontWeight: "bold",
-                          // paddingRight: "10px",
-                          // textAlign: "center"
-                        }}
-                      >
-                        {roundedTotal}€
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2} style={{ textAlign: "right" }}>
-                        (Frais de livraison) :
-                      </td>
-                      <td>{shippingFee}€</td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2} style={{ textAlign: "right" }}>
-                        Total :
-                      </td>
-                      <td style={{ fontWeight: "bold" }}>
-                        {roundedTotal + parseInt(shippingFee || 0)}€
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
+                      <tr>
+                        <td colSpan={2} style={{ textAlign: "right" }}>
+                          (Frais de livraison) :
+                        </td>
+                        <td>{shippingFee}€</td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2} style={{ textAlign: "right" }}>
+                          Total :
+                        </td>
+                        <td style={{ fontWeight: "bold" }}>
+                          {roundedTotal + parseInt(shippingFee || 0)}€
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
                 </>
               )}
             </WhiteBox>
           </div>
-          
 
-          { !!cartProducts?.length && (
+          {!!cartProducts?.length && (
             <>
-            <div>
-              <WhiteBox>
-                <Title>Saisissez vos informations</Title>
-                <Input
-                  type="text"
-                  placeholder="Nom"
-                  value={firstName}
-                  name="firstName"
-                  onChange={(ev) => setFirstName(ev.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Prénom"
-                  value={lastName}
-                  name="lastName"
-                  onChange={(ev) => setLastName(ev.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Email"
-                  value={email}
-                  name="email"
-                  onChange={(ev) => setEmail(ev.target.value)}
-                />
-                <CityHolder>
+              <div>
+                <WhiteBox>
+                  <Title>Saisissez vos informations</Title>
                   <Input
                     type="text"
-                    placeholder="Ville"
-                    value={city}
-                    name="city"
-                    onChange={(ev) => setCity(ev.target.value)}
+                    placeholder="Nom"
+                    value={firstName}
+                    name="firstName"
+                    onChange={(ev) => setFirstName(ev.target.value)}
                   />
                   <Input
                     type="text"
-                    placeholder="Code postal"
-                    value={postalCode}
-                    name="postalCode"
-                    onChange={(ev) => setPostalCode(ev.target.value)}
+                    placeholder="Prénom"
+                    value={lastName}
+                    name="lastName"
+                    onChange={(ev) => setLastName(ev.target.value)}
                   />
-                </CityHolder>
+                  <Input
+                    type="text"
+                    placeholder="Email"
+                    value={email}
+                    name="email"
+                    onChange={(ev) => setEmail(ev.target.value)}
+                  />
+                  <CityHolder>
+                    <Input
+                      type="text"
+                      placeholder="Ville"
+                      value={city}
+                      name="city"
+                      onChange={(ev) => setCity(ev.target.value)}
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Code postal"
+                      value={postalCode}
+                      name="postalCode"
+                      onChange={(ev) => setPostalCode(ev.target.value)}
+                    />
+                  </CityHolder>
 
-                <Input
-                  type="text"
-                  placeholder="Adresse"
-                  value={adress}
-                  name="adress"
-                  onChange={(ev) => setAdress(ev.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Pays"
-                  value={country}
-                  name="country"
-                  onChange={(ev) => setCountry(ev.target.value)}
-                />
-                <Button black="true" block="true" onClick={goToPayment}>
-                  Continuez vers le paiement
-                </Button>
-              </WhiteBox>
-          
-            </div>
+                  <Input
+                    type="text"
+                    placeholder="Adresse"
+                    value={adress}
+                    name="adress"
+                    onChange={(ev) => setAdress(ev.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Pays"
+                    value={country}
+                    name="country"
+                    onChange={(ev) => setCountry(ev.target.value)}
+                  />
+                  <Button black="true" block="true" onClick={goToPayment}>
+                    Continuez vers le paiement
+                  </Button>
+                </WhiteBox>
+              </div>
             </>
           )}
-          
-          </ColumnsWrapper>
-          </Center>
-          
-
-
-
-</>
-
-
+        </ColumnsWrapper>
+      </Center>
+    </>
   ); // Return
-
-
-
-
-
-} // Funtction close 
+} // Funtction close

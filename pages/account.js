@@ -17,6 +17,7 @@ import UserIcon from "@/components/icons/UserIcon";
 import PasswordIcon from "@/components/icons/PasswordIcon";
 import Link from "next/link";
 import Title from "@/components/Title";
+import Spinner from "@/components/Spinner";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -127,7 +128,7 @@ export default function AccountPage() {
   //Success message after user save informations
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   //Spinner 
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -168,8 +169,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (session) {
-      // setLoading(true);
-      // setOrderLoaded(false);
+      setLoading(true);
       axios.get("/api/userInformation").then((response) => {
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
@@ -187,9 +187,8 @@ export default function AccountPage() {
       // List of orders on account page
       axios.get("api/orders").then((response) => {
         setOrders(response.data);
-        // setOrderLoaded(true);
       });
-      // setLoading(false);
+      setLoading(false);
     }
   }, [session]);
 
@@ -259,8 +258,15 @@ export default function AccountPage() {
                         )}
                       </>
                     )}
-                    {orders.length > 0 &&
-                      orders.map((o) => <OrdersList key={o._id} {...o} />)}
+
+                    {loading && session ? (
+        <Spinner fullWidth={true} /> // Show spinner while loading
+      ) : (
+        orders.length > 0 && orders.map((o) => <OrdersList key={o._id} {...o} />)
+      )}
+
+                    {/* {orders.length > 0 &&
+                      orders.map((o) => <OrdersList key={o._id} {...o} />)} */}
                   </div>
                 </>
               )}
