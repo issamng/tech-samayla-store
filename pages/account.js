@@ -168,29 +168,36 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
-    if (session) {
-      setLoading(true);
-      axios.get("/api/userInformation").then((response) => {
-        setFirstName(response.data.firstName);
-        setLastName(response.data.lastName);
-        setEmail(response.data.email);
-        setCity(response.data.city);
-        setPostalCode(response.data.postalCode);
-        setAdress(response.data.adress);
-        setCountry(response.data.country);
-        // setLoaded(true);
-      });
-      // Wishlist on account page
-      axios.get("/api/wishlist").then((response) => {
-        setWishedProducts(response.data.map((wp) => wp.product));
-      });
-      // List of orders on account page
-      axios.get("api/orders").then((response) => {
-        setOrders(response.data);
-      });
-      setLoading(false);
-    }
+    const fetchData = async () => {
+setLoading(true);
+      if (session) {
+        try {
+          const userInformationResponse = await axios.get("/api/userInformation");
+          setFirstName(userInformationResponse.data.firstName);
+          setLastName(userInformationResponse.data.lastName);
+          setEmail(userInformationResponse.data.email);
+          setCity(userInformationResponse.data.city);
+          setPostalCode(userInformationResponse.data.postalCode);
+          setAdress(userInformationResponse.data.adress);
+          setCountry(userInformationResponse.data.country);
+          
+  
+          const wishlistResponse = await axios.get("/api/wishlist");
+          setWishedProducts(wishlistResponse.data.map((wp) => wp.product));
+          
+          const ordersResponse = await axios.get("api/orders");
+          setOrders(ordersResponse.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } 
+      }
+    };
+    
+    fetchData();
+    setLoading(false);
+    
   }, [session]);
+  
 
   // When remove product from wishlist (from the acount page)
   function productRemovedFromWishlist(idToRemove) {
@@ -213,9 +220,7 @@ export default function AccountPage() {
     <>
       <Header />
       <Center>
-        {/* {loading ? (
-        <Spinner /> 
-      ) : ( */}
+     
         <ColsWrapper>
           <div>
             <WhiteBox>
@@ -227,7 +232,7 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    {!session && !loading && (
+                    { !session && !loading &&  (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
@@ -238,17 +243,17 @@ export default function AccountPage() {
                         )}
                       </>
                     )}
+                    </div>
 
-                    {loading && session ? (
+                  <div>
+                  {loading && session ? (
                       <Spinner fullWidth={true} />
                     ) : (
                       orders.length > 0 &&
                       orders.map((o) => <OrdersList key={o._id} {...o} />)
                     )}
-
-                    {/* {orders.length > 0 &&
-                      orders.map((o) => <OrdersList key={o._id} {...o} />)} */}
                   </div>
+                
                 </>
               )}
               {activeTabName === "Ma liste d'envies" && (
