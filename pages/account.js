@@ -101,8 +101,8 @@ const SignUp = styled(Link)`
 const SuccessMessage = styled.div`
   color: #008000;
   margin-top: 10px;
-  font-weight:bold;
-  font-size:0.9rem;
+  font-weight: bold;
+  font-size: 0.9rem;
 `;
 
 export default function AccountPage() {
@@ -127,7 +127,7 @@ export default function AccountPage() {
   const [orders, setOrders] = useState([]);
   //Success message after user save informations
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  //Spinner 
+  //Spinner
   const [loading, setLoading] = useState(true);
   async function logout() {
     await signOut({
@@ -157,7 +157,7 @@ export default function AccountPage() {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-        }, 3000); 
+        }, 3000);
       })
       .catch((error) => {
         console.error(
@@ -199,26 +199,6 @@ export default function AccountPage() {
     });
   }
 
-  //fetching user information
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/userInformation")
-  //     .then((response) => {
-  //       setFirstName(response.data.firstName);
-  //       setLastName(response.data.lastName);
-  //       setEmail(response.data.email);
-  //       setCity(response.data.city);
-  //       setPostalCode(response.data.postalCode);
-  //       setAdress(response.data.adress);
-  //       setCountry(response.data.country);
-  //       setLoaded(true);
-  //     })
-  //     .catch((error) => {
-  //       // Handle error, e.g., display an error message or redirect to login
-  //       console.error("Error fetching user information:", error);
-  //     });
-  // }, []);
-
   //Login Form
   const {
     register,
@@ -233,7 +213,7 @@ export default function AccountPage() {
     <>
       <Header />
       <Center>
-      {/* {loading ? (
+        {/* {loading ? (
         <Spinner /> 
       ) : ( */}
         <ColsWrapper>
@@ -247,11 +227,11 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    {!session && (
+                    {!session && !loading && (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
-                    {orders.length === 0 && (
+                    {orders.length === 0 && !loading && (
                       <>
                         {session && (
                           <p>Vous n'avez pas encore passé de commandes.</p>
@@ -260,10 +240,11 @@ export default function AccountPage() {
                     )}
 
                     {loading && session ? (
-        <Spinner fullWidth={true} /> // Show spinner while loading
-      ) : (
-        orders.length > 0 && orders.map((o) => <OrdersList key={o._id} {...o} />)
-      )}
+                      <Spinner fullWidth={true} />
+                    ) : (
+                      orders.length > 0 &&
+                      orders.map((o) => <OrdersList key={o._id} {...o} />)
+                    )}
 
                     {/* {orders.length > 0 &&
                       orders.map((o) => <OrdersList key={o._id} {...o} />)} */}
@@ -299,8 +280,8 @@ export default function AccountPage() {
             <WhiteBox>
               {session && (
                 <>
-                <Title>Mes informations personnelles</Title>
-                  
+                  <Title>Mes informations personnelles</Title>
+
                   <Input
                     type="text"
                     placeholder="Nom"
@@ -377,8 +358,7 @@ export default function AccountPage() {
               )}
               {!session && (
                 <>
-                <Title>Connectez-vous</Title>
-                  
+                  <Title>Connectez-vous</Title>
 
                   {/* login form  */}
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -412,7 +392,8 @@ export default function AccountPage() {
                       />
                     </InputContainer>
                     <SubmitButton
-                       primary="true" hover="true"
+                      primary="true"
+                      hover="true"
                       onClick={onSubmit}
                     >
                       Connexion
