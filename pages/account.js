@@ -237,11 +237,11 @@ export default function AccountPage() {
 
                   <div>
 
-                  {!loading && session && orders.length === 0 &&  (
+                  {session && orders.length === 0 &&  (
                       <p>Vous n'avez pas encore passé de commandes.</p>
                     )}
 
-                    {!session && !loading && (
+                    {!session && (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
