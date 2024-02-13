@@ -228,7 +228,7 @@ export default function CartPage() {
                 </>
               )}
 
-              {loading && <Spinner fullWidth={true} />}
+              {loading && products?.length > 0 && <Spinner fullWidth={true} />}
 
               {products?.length > 0 && (
                 <>

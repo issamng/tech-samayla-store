@@ -227,7 +227,7 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    {loading ? (
+                    {loading && session ? (
                       <Spinner fullWidth={true} />
                     ) : (
                       orders.length > 0 &&
