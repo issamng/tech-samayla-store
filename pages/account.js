@@ -241,7 +241,7 @@ export default function AccountPage() {
                       <p>Vous n'avez pas encore passé de commandes.</p>
                     )}
 
-                    {!loading && !session && (
+                    {!loading && !session &&  orders.length === 0 &&  (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
