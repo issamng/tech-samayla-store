@@ -164,7 +164,6 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
       if (session && session.user) {
         setLoading(true);
         try {
@@ -228,21 +227,21 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
+                    {loading ? (
+                      <Spinner fullWidth={true} />
+                    ) : (
+                      orders.length > 0 &&
+                      orders.map((o) => <OrdersList key={o._id} {...o} />)
+                    )}
+                  </div>
+
+                  <div>
                     {!session && !loading && (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     )}
 
                     {orders.length === 0 && !loading && session && (
                       <p>Vous n'avez pas encore passé de commandes.</p>
-                    )}
-                  </div>
-
-                  <div>
-                    {loading ? (
-                      <Spinner fullWidth={true} />
-                    ) : (
-                      orders.length > 0 &&
-                      orders.map((o) => <OrdersList key={o._id} {...o} />)
                     )}
                   </div>
                 </>
