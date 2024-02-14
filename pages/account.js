@@ -164,11 +164,14 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      
       if (session && session.user) {
+        
         try {
+          setLoading(true);
           const ordersResponse = await axios.get("api/orders");
           setOrders(ordersResponse.data);
+          setLoading(false);
 
           const userInformationResponse = await axios.get(
             "/api/userInformation"
@@ -351,7 +354,7 @@ export default function AccountPage() {
                   Me déconnecter
                 </Button>
               )}
-              {!session && !loading && (
+              {!session &&  (
                 <>
                   <Title>Connectez-vous</Title>
 
