@@ -166,9 +166,9 @@ export default function AccountPage() {
     const fetchData = async () => {
       
       if (session && session.user) {
-        
+        setLoading(true);
         try {
-          setLoading(true);
+          
           const ordersResponse = await axios.get("api/orders");
           setOrders(ordersResponse.data);
           setLoading(false);
@@ -239,11 +239,11 @@ export default function AccountPage() {
                   </div>
 
                   <div>
-                    {!loading && session && orders.length === 0 ? (
+                    {session && orders.length === 0 ? (
                       <p>Vous n'avez pas encore passé de commandes.</p>
                     ) : null}
 
-                    {!loading && !session ? (
+                    {!session ? (
                       <p>Connectez-vous pour afficher vos commandes.</p>
                     ) : null}
                   </div>
