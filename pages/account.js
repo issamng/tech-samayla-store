@@ -123,7 +123,7 @@ export default function AccountPage() {
   //Success message after user save informations
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   //Spinner
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -164,14 +164,12 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
-      if (session && session.user) {
+      if (session) {
         setLoading(true);
         try {
-          
           const ordersResponse = await axios.get("api/orders");
           setOrders(ordersResponse.data);
-          setLoading(false);
+          // setLoading(false);
 
           const userInformationResponse = await axios.get(
             "/api/userInformation"
@@ -230,22 +228,25 @@ export default function AccountPage() {
               {activeTabName === "Mes commandes" && (
                 <>
                   <div>
-                    {loading && session ? (
+                    {loading ? (
                       <Spinner fullWidth={true} />
                     ) : (
-                      orders.length > 0 &&
-                      orders.map((o) => <OrdersList key={o._id} {...o} />)
+                      <>
+                        {!session && !loading && (
+                          <p>Connectez-vous pour afficher vos commandes.</p>
+                        )}
+
+                        {session && orders.length > 0 ? (
+                          orders.map((o) => <OrdersList key={o._id} {...o} />)
+                        ) : (
+                          <>
+                            {session && orders.length === 0 && (
+                              <p>Vous n'avez pas encore passé de commandes.</p>
+                            )}
+                          </>
+                        )}
+                      </>
                     )}
-                  </div>
-
-                  <div>
-                    {session && orders.length === 0 ? (
-                      <p>Vous n'avez pas encore passé de commandes.</p>
-                    ) : null}
-
-                    {!session ? (
-                      <p>Connectez-vous pour afficher vos commandes.</p>
-                    ) : null}
                   </div>
                 </>
               )}
@@ -354,7 +355,7 @@ export default function AccountPage() {
                   Me déconnecter
                 </Button>
               )}
-              {!session &&  (
+              {!session && (
                 <>
                   <Title>Connectez-vous</Title>
 
