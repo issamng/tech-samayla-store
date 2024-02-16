@@ -5,7 +5,7 @@ position: absolute;
 width: 20px;
 height: 22px;
 color:#aaa;
-top:7px;
+top:6px;
 `;
 
 export default function UserIcon({ className = "w-6 h-6" }) {

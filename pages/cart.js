@@ -103,7 +103,7 @@ export default function CartPage() {
   // Shipping fee
   const [shippingFee, setShippingFee] = useState(null);
   //Spinner before displaying products in cart page
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   //Display products in cart box
   useEffect(() => {
     if (cartProducts.length > 0) {
