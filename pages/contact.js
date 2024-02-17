@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Header from "@/components/Header";
@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CircularJSON from "circular-json";
+import Spinner from "@/components/Spinner";
 
 const FormWrapper = styled.div`
   background-color: #f8f8f8;
@@ -66,7 +67,17 @@ const ErrorMessage = styled.div`
   font-size:.8rem;
 `;
 
+const SuccessMessage = styled.div`
+  color: #008000;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+`;
+
 export default function ContactPage() {
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
     lastName: yup.string().max(50),
@@ -79,23 +90,43 @@ export default function ContactPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  // const onSubmit = (data) => console.log(data);
+  // console.log(errors);
 
-  // const onSubmit = async (data) =>
-  //   await fetch("/api/contact", {
-  //     method: "POST",
-  //     body: CircularJSON.stringify(data),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   });
+  const onSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: CircularJSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+  
+      if(response.ok){
+        // reset();
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000);
+      } else {
+        console.error("Error submitting data:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred during the submission:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
 
   return (
     <>
@@ -133,16 +164,21 @@ export default function ContactPage() {
             <InputField
               type="text"
               placeholder="Objet"
-              {...register("Objet", { maxLength: 100 })}
+              {...register("Subject", { maxLength: 100 })}
             />
             <TextAreaField
               placeholder="Message"
               {...register("Message", { required: true })}
             />
             <ErrorMessage>{errors.Message?.message}</ErrorMessage>
-            <SubmitButton primary="true" hover="true" onClick={onSubmit}>
-              Envoyer
+            <SubmitButton primary="true" hover="true" disabled={isLoading}>
+            {isLoading ? <Spinner fullWidth={true} white={true} /> : 'Envoyer'}
             </SubmitButton>
+            {showSuccessMessage && (
+                    <SuccessMessage>
+                      Votre message a été envoyé avec succès.
+                    </SuccessMessage>
+                  )}
           </form>
         </FormWrapper>
       </Center>

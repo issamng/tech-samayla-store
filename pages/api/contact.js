@@ -1,5 +1,13 @@
 import { transporter, mailOptions } from "@/config/nodemailer";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "8mb",
+    },
+  },
+};
+
 export default async function handle(req, res) {
   if (req.method === "POST") {
     const data = req.body;
@@ -7,13 +15,31 @@ export default async function handle(req, res) {
     try {
       await transporter.sendMail({
         ...mailOptions,
-        subject: data.subject,
-        text: "Test Nodemailer text",
-        html: "<h1>Nodemailer test title<p>Nodemailer test pp</p>",
+        subject: data.Subject,
+        text: `
+          Nom: ${data.lastName}
+          Prénom: ${data.firstName}
+          Email: ${data.Email}
+          Object: ${data.Subject}
+          Message: ${data.Message}
+        `,
+        html: `
+          <h1>Tech Samayla</h1><h2>Vous avez un nouveau message</h2>
+          <p><b>Nom:</b> ${data.lastName}</p>
+          <p><b>Prénom:</b> ${data.firstName}</p>
+          <p><b>Email:</b> ${data.Email}</p>
+          <p><b>Object:</b> ${data.Subject}</p>
+          <p><b>Message:</b> ${data.Message}</p>
+        `,
       });
+
+      // Send a success response
+      return res.status(200).json({ message: "Votre message a été envoyé avec succès." });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ message: error.message });
     }
+  } else {
+    return res.status(405).json({ message: "Methode d'envoie non autorisé!" });
   }
 }

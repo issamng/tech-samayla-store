@@ -104,6 +104,7 @@ export default function CartPage() {
   const [shippingFee, setShippingFee] = useState(null);
   //Spinner before displaying products in cart page
   const [loading, setLoading] = useState(false);
+
   //Display products in cart box
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -215,10 +216,10 @@ export default function CartPage() {
             <WhiteBox>
               <Title>Mon panier</Title>
 
-              {!loading && !cartProducts?.length && (
+              {!cartProducts?.length && !loading && (
                 <>
                   <div>Oops, votre panier est vide. </div>
-                  <div style={{ marginTop: "10px" }}>
+                  <div style={{ marginTop: "10px", lineHeight: 1.5 }}>
                     Besoin d'inspiration? Explorez nos{" "}
                     <CartEmpty href="/">nouveautés</CartEmpty> pour dénicher des
                     trésors ou parcourez nos{" "}
@@ -228,9 +229,9 @@ export default function CartPage() {
                 </>
               )}
 
-              {loading  && <Spinner fullWidth={true} />}
+              {loading && <Spinner fullWidth={true} />}
 
-              {products?.length > 0 && (
+              {products?.length > 0 &&  (
                 <>
                   <Table>
                     <thead>

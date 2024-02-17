@@ -25,7 +25,7 @@ border-color: #ccc;
 `
       : `
 border-color: Transparent;
-// opacity: .8;
+// opacity: .9;
 `}
 
   height: 40px;
