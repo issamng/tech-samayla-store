@@ -42,15 +42,13 @@ const FooterLink = styled(Link)`
   padding: 5px 0;
   font-size: 0.9rem;
   &:hover {
-    text-decoration: underline;
+    color: #fff;
   }
 `;
 
 const SocialIconContainer = styled.div`
   display: flex;
-  /* padding-left: 35px; */
   gap: 30px;
-  /* margin-top: 60px; */
 `;
 
 const JoinUs = styled.div`

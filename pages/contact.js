@@ -80,10 +80,10 @@ export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
-    lastName: yup.string().max(50),
-    firstName: yup.string().required("Entrez votre prénom").max(50),
+    lastName: yup.string().max(50, 'Le nom ne doit pas dépasser 50 caractères.'),
+    firstName: yup.string().required("Entrez votre prénom").max(50, 'Le prénom ne doit pas dépasser 50 caractères.'),
     Email: yup.string().email("Format invalide").required("Entrez votre email"),
-    Objet: yup.string().max(100),
+    Objet: yup.string().max(100, "L'objet ne doit pas dépasser 100 caractères."),
     Message: yup.string().required("Entrez votre message"),
   });
 
@@ -112,7 +112,7 @@ export default function ContactPage() {
       });
   
       if(response.ok){
-        // reset();
+        reset();
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
@@ -139,7 +139,11 @@ export default function ContactPage() {
               type="text"
               placeholder="Nom"
               {...register("lastName", { maxLength: 50 })}
+              
             />
+             {errors.lastName && (
+              <ErrorMessage>{errors.lastName.message}</ErrorMessage>
+            )}
             <InputField
               type="text"
               placeholder="Prenom"

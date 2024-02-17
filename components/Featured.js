@@ -5,9 +5,11 @@ import CartIcon from "./icons/CartIcon";
 import FlyingButton from "./FlyingButton";
 import { RevealWrapper } from "next-reveal";
 
+
 const Bg = styled.div`
   background-color: #222;
   color: #fff;
+  
 `;
 
 const Title = styled.h1`
@@ -27,6 +29,7 @@ const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
+  /* opacity: ${(props) => (props.revealed ? 1 : 0)}; */
 
   img.main {
     max-width: 100%;
@@ -62,13 +65,14 @@ const ButtonsWrapper = styled.div`
 `;
 
 export default function Featured({ product }) {
+
   return (
-    <Bg>
+    <Bg  >
       <Center>
-        <ColumnsWrapper>
+        <ColumnsWrapper >
           <Column>
             <div>
-              <RevealWrapper origin={"left"}>
+              <RevealWrapper origin={"left"}  >
                 <Title>{product.title}</Title>
                 <Desc>{product.description}</Desc>
                 <ButtonsWrapper>
