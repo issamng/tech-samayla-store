@@ -56,7 +56,7 @@ ${(props) =>
     props.black &&
     !props.outline &&
     css`
-      background-color: #000;
+      background-color: #333333;
       color: #fff;
     `}
   ${(props) =>
@@ -64,7 +64,7 @@ ${(props) =>
     props.outline &&
     css`
       background-color: transparent;
-      color: #000;
+      color: #333333;
       border: 1px solid #000;
     `}
   ${(props) =>
@@ -93,7 +93,7 @@ ${(props) =>
       }
     `}
 
-    ${(props) =>
+    /* ${(props) =>
     props.signin &&
     css`
       background-color: white;
@@ -110,7 +110,7 @@ ${(props) =>
       margin-right:10px;
       border:1px solid #eee;
       
-    `}
+    `} */
     
 `;
 

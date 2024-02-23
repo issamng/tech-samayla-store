@@ -10,7 +10,8 @@ const StyledFooter = styled.div`
   // position: absolute;
   bottom: 0;
   margin-bottom: 0;
-  background-color: #222;
+  /* background-color: #222; */
+  background-color: #333333;
   display: grid;
   grid-template-columns: 1fr;
   /* justify-content: center;  */

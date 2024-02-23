@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Center from "./Center";
 import ProductsGrid from "./ProductsGrid";
 
-const Title = styled.h2`
+const Title = styled.h1`
   font-size: 2rem;
   margin: 0;
   margin: 30px 0 20px;

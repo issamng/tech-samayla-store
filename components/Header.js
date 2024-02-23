@@ -11,7 +11,7 @@ import Button from "./Button";
 // import DropdownUser from "./DropdownUser";
 
 const StyledHeader = styled.header`
-  background-color: #222;
+  background-color: #333333;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -54,7 +54,7 @@ const StyledNav = styled.nav`
   right: 0;
   padding: 70px 20px 20px;
  
-  background-color: #222;
+  background-color: #333333;
   @media screen and (min-width: 768px) {
     display: flex;
     position: static;

@@ -7,7 +7,7 @@ import { RevealWrapper } from "next-reveal";
 
 
 const Bg = styled.div`
-  background-color: #222;
+  background-color: #333333;
   color: #fff;
   
 `;
@@ -72,7 +72,7 @@ export default function Featured({ product }) {
         <ColumnsWrapper >
           <Column>
             <div>
-              <RevealWrapper origin={"left"}  >
+              <RevealWrapper origin={"left"} >
                 <Title>{product.title}</Title>
                 <Desc>{product.description}</Desc>
                 <ButtonsWrapper>
