@@ -42,7 +42,7 @@ const InputField = styled.input`
   box-sizing: border-box;
   font-family: inherit;
   border: none;
-  border-bottom: 2px solid #d1d1d4;
+  border-bottom: 1px solid ${(props) => (props.hasError ? "red" : "#d1d1d4")};
   font-weight: 500;
   background-color:#f8f8f8;
   
@@ -97,8 +97,8 @@ const ErrorMessage = styled.div`
 
 export default function SignInPage() {
   const schema = yup.object({
-    Email: yup.string().email("Format invalide").required("Entrez votre email"),
-    Password: yup.string().required("Entrez votre mot de passe"),
+    email: yup.string().email("Format invalide").required("Entrez votre email"),
+    password: yup.string().required("Entrez votre mot de passe"),
   });
 
   const {
@@ -134,15 +134,16 @@ export default function SignInPage() {
                       <InputField
                         type="email"
                         placeholder="Email"
-                        {...register("Email", {
+                        {...register("email", {
                           required: true,
                           pattern:
                             /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
                         })}
+                        hasError={errors.email}
                       />
 
-{errors.Email && (
-              <ErrorMessage>{errors.Email.message}</ErrorMessage>
+{errors.email && (
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
                       
                     </InputContainer>
@@ -153,15 +154,16 @@ export default function SignInPage() {
                       <InputField
                         type="password"
                         placeholder="Mot de passe"
-                        {...register("Password", {
+                        {...register("password", {
                           required: true,
                           max: 14,
                           min: 6,
                           maxLength: 14,
                         })}
+                        hasError={errors.password}
                       />
-                      {errors.Password && (
-              <ErrorMessage>{errors.Password.message}</ErrorMessage>
+                      {errors.password && (
+              <ErrorMessage>{errors.password.message}</ErrorMessage>
             )}
                     </InputContainer>
             <SubmitButton primary="true" hover="true" onClick={onSubmit}>

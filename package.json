@@ -12,6 +12,7 @@
     "@auth/mongodb-adapter": "^2.0.12",
     "@hookform/resolvers": "^3.3.4",
     "axios": "^1.6.3",
+    "bcrypt": "^5.1.1",
     "circular-json": "^0.5.9",
     "lodash": "^4.17.21",
     "micro": "^10.0.1",
