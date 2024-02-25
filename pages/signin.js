@@ -15,13 +15,12 @@ const FormWrapper = styled.div`
   background-color: #f8f8f8;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius:10px;
+  border-radius: 10px;
   width: 60%;
   margin: 80px auto;
   @media screen and (max-width: 768px) {
-    width:70%;
+    width: 70%;
   }
- 
 `;
 
 const FormTitle = styled.h1`
@@ -44,8 +43,8 @@ const InputField = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => (props.hasError ? "red" : "#d1d1d4")};
   font-weight: 500;
-  background-color:#f8f8f8;
-  
+  background-color: #f8f8f8;
+
   &:active,
   &:hover,
   &:focus {
@@ -67,7 +66,7 @@ const ConnectGoogle = styled.button`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   background-color: white;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -81,18 +80,18 @@ const ConnectGoogle = styled.button`
 `;
 
 const SignUp = styled(Link)`
-text-decoration: none;
-color:#29465b;
-font-weight: bold;
-&:hover{
+  text-decoration: none;
+  color: #29465b;
+  font-weight: bold;
+  &:hover {
     text-decoration: underline;
-}
+  }
 `;
 
 const ErrorMessage = styled.div`
   color: red;
   margin: -15px 0 13px 5px;
-  font-size:.8rem;
+  font-size: 0.8rem;
 `;
 
 export default function SignInPage() {
@@ -109,9 +108,21 @@ export default function SignInPage() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  // const onSubmit = (data) => console.log(data);
+  // console.log(errors);
 
+  // Connect with credentials
+  const onSubmit = async (data) => {
+    try {
+        await signIn('credentials', data);
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      
+    }
+  };
+
+  // Connect with Google 
   async function login() {
     await signIn("google", {
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -127,46 +138,44 @@ export default function SignInPage() {
         <FormWrapper>
           <FormTitle>Connectez-vous</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <InputContainer>
-                      <i>
-                        <UserIcon />
-                      </i>
-                      <InputField
-                        type="email"
-                        placeholder="Email"
-                        {...register("email", {
-                          required: true,
-                          pattern:
-                            /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
-                        })}
-                        hasError={errors.email}
-                      />
+            <InputContainer>
+              <i>
+                <UserIcon />
+              </i>
+              <InputField
+                type="email"
+                placeholder="Email"
+                {...register("email", {
+                  required: true,
+                  pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
+                })}
+                hasError={errors.email}
+              />
 
-{errors.email && (
-              <ErrorMessage>{errors.email.message}</ErrorMessage>
-            )}
-                      
-                    </InputContainer>
-                    <InputContainer>
-                      <i>
-                        <PasswordIcon />
-                      </i>
-                      <InputField
-                        type="password"
-                        placeholder="Mot de passe"
-                        {...register("password", {
-                          required: true,
-                          max: 14,
-                          min: 6,
-                          maxLength: 14,
-                        })}
-                        hasError={errors.password}
-                      />
-                      {errors.password && (
-              <ErrorMessage>{errors.password.message}</ErrorMessage>
-            )}
-                    </InputContainer>
-            <SubmitButton primary="true" hover="true" onClick={onSubmit}>
+              {errors.email && (
+                <ErrorMessage>{errors.email.message}</ErrorMessage>
+              )}
+            </InputContainer>
+            <InputContainer>
+              <i>
+                <PasswordIcon />
+              </i>
+              <InputField
+                type="password"
+                placeholder="Mot de passe"
+                {...register("password", {
+                  required: true,
+                  max: 14,
+                  min: 6,
+                  maxLength: 14,
+                })}
+                hasError={errors.password}
+              />
+              {errors.password && (
+                <ErrorMessage>{errors.password.message}</ErrorMessage>
+              )}
+            </InputContainer>
+            <SubmitButton primary="true" hover="true">
               Connexion
             </SubmitButton>
           </form>
@@ -192,8 +201,10 @@ export default function SignInPage() {
             </svg>
             Se connecter avec Google
           </ConnectGoogle>
-          <div>Vous n&apos;avez pas encore de compte? <SignUp href="/signup">Inscrivez-vous</SignUp></div>
-          
+          <div>
+            Vous n&apos;avez pas encore de compte?{" "}
+            <SignUp href="/signup">Inscrivez-vous</SignUp>
+          </div>
         </FormWrapper>
       </Center>
       <Footer />

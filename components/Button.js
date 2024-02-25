@@ -1,11 +1,10 @@
 import styled, { css } from "styled-components";
 import { primary } from "@/lib/colors";
 
-
 export const ButtonStyle = css`
   border: 0;
   padding: 5px 15px;
-  /* padding:0.5rem 1rem; */
+  padding:0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
   display: inline-flex;
@@ -23,7 +22,6 @@ export const ButtonStyle = css`
     css`
       &:hover {
         opacity: 0.9;
-        
       }
     `}
 
@@ -92,26 +90,6 @@ ${(props) =>
         height: 20px;
       }
     `}
-
-    /* ${(props) =>
-    props.signin &&
-    css`
-      background-color: white;
-      color:black;
-      margin-right:10px;
-      
-    `}
-
-    ${(props) =>
-    props.signup &&
-    css`
-      background-color: black;
-      color:white;
-      margin-right:10px;
-      border:1px solid #eee;
-      
-    `} */
-    
 `;
 
 export const StyledButton = styled.button`

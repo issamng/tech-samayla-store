@@ -8,6 +8,7 @@ import SearchIcon from "./icons/SearchIcon";
 import CloseIcon from "./icons/CloseIcon";
 import Image from "next/image";
 import Button from "./Button";
+import { signOut, useSession } from "next-auth/react";
 // import DropdownUser from "./DropdownUser";
 
 const StyledHeader = styled.header`
@@ -25,7 +26,11 @@ const Logo = styled(Link)`
 
   z-index: 3;
   font-family: "Rock Salt", cursive;
+  margin-left: 15px;
   // font-size:1.2rem;
+  @media screen and (min-width: 768px) {
+    margin-left: 200px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -33,6 +38,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
+  @media screen and (min-width: 768px) {
+    justify-content: space-evenly;
+  }
 `;
 
 const StyledNav = styled.nav`
@@ -41,10 +49,12 @@ const StyledNav = styled.nav`
     props.$mobilenavactive
       ? `
   display: block;
+  
   `
       : `
   display: none;
-  `}
+  ` 
+  }
 
   gap: 15px;
   position: fixed;
@@ -52,14 +62,23 @@ const StyledNav = styled.nav`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 70px 20px 20px;
- 
+  padding: 70px 10px 20px;
+  align-items: center;
+
   background-color: #333333;
   @media screen and (min-width: 768px) {
     display: flex;
     position: static;
     padding: 0;
+
     /* margin-top:-5px; */
+  }
+  @media screen and (max-width: 768px) {
+    & > Button {
+    width:100%;
+    justify-content: center;
+
+  }
   }
 `;
 
@@ -74,12 +93,32 @@ const NavLink = styled(Link)`
     color: #dfe5eb;
     /* opacity: 0.5; */
   }
+  &[href="/signup"],
+  &[href="/logout"] {
+    background-color: #dddddd;
+    color: #000000;
+    padding: 7px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  &[href="/signin"] {
+    text-align: center;
+    color: #eee;
+    border: 1px solid #aaa;
+    padding: 6px;
+    border-radius: 7px;
+    margin-bottom: 10px;
+  }
   svg {
     height: 20px;
   }
 
   @media screen and (min-width: 768px) {
     padding: 0;
+    &[href="/signin"] {
+      margin-bottom: 0;
+      margin-left: 300px;
+    }
   }
 `;
 
@@ -102,7 +141,7 @@ const NavButton = styled.button`
 const SideIcons = styled.div`
   display: flex;
   align-items: center;
-  margin-top:5px;
+  margin-top: 5px;
   a {
     display: inline-block;
     min-width: 20px;
@@ -115,15 +154,26 @@ const SideIcons = styled.div`
 `;
 
 export default function Header() {
+  const session = useSession();
+  console.log(session);
+  const status = session.status;
   const { cartProducts } = useContext(CartContext);
   //Responsive:
   const [mobilenavactive, setMobileNavActive] = useState(false);
+
+  async function logout() {
+    await signOut({
+      callbackUrl: process.env.NEXT_PUBLIC_URL,
+    });
+  }
   return (
     <StyledHeader>
-      <Center>
+      {/* <Center> */}
       <Wrapper>
         <Logo href={"/"}>
-          <Image src="/logofinal.png" alt="Logo" width={127} height={50} />
+          {/* <Image src="/logofinal.png" alt="Logo" width={127} height={50} /> */}
+          <div>TECH</div>
+          <div>SAMAYLA</div>
         </Logo>
         <StyledNav $mobilenavactive={mobilenavactive}>
           <NavLink href="/">Accueil</NavLink>
@@ -131,21 +181,25 @@ export default function Header() {
           <NavLink href="/categories">Rayons</NavLink>
           <NavLink href="/account">Mon compte</NavLink>
           <NavLink href="/cart">Mon Panier ({cartProducts.length})</NavLink>
-          {/* <div><Button signin >Se connecter</Button></div>
-           <div><Button signup>S&apos;inscrire</Button></div> */}
-         
+          {status === "authenticated" && (
+            <Button onClick={logout}>Se déconnecter</Button>
+          )}
+          {status !== "authenticated" && (
+            <>
+              <NavLink href="/signin">Se connecter</NavLink>
+              <NavLink href="/signup">Inscription</NavLink>
+            </>
+          )}
+
+          {/* <div><Button signin >Se connecter</Button></div> */}
+          {/* <div><Button signup>S&apos;inscrire</Button></div> */}
         </StyledNav>
+        <StyledNav></StyledNav>
         {/* Navigation Icons  */}
         <SideIcons>
-
-      {/* <DropdownUser /> */}
-          <Link href={"/search"}>
-            <SearchIcon />{" "}
-           </Link>
-
-
-           
-
+          {/* <Link href={"/search"}>
+              <SearchIcon />{" "}
+            </Link> */}
 
           {/* responsive */}
           <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
@@ -153,13 +207,11 @@ export default function Header() {
             {mobilenavactive ? <CloseIcon /> : <BarsIcon />}
           </NavButton>
         </SideIcons>
-        
+
         {/* <div style={{color:'red'}}>Se connecter</div>
         <div style={{color:'red'}}>S&apos;inscrire</div> */}
       </Wrapper>
-      
-      </Center>
-      
+      {/* </Center> */}
     </StyledHeader>
   );
 }
