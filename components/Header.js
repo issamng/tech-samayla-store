@@ -9,7 +9,6 @@ import CloseIcon from "./icons/CloseIcon";
 import Image from "next/image";
 import Button from "./Button";
 import { signOut, useSession } from "next-auth/react";
-// import DropdownUser from "./DropdownUser";
 
 const StyledHeader = styled.header`
   background-color: #333333;
@@ -19,17 +18,13 @@ const StyledHeader = styled.header`
 `;
 
 const Logo = styled(Link)`
-  // @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
-
   color: #fff;
   text-decoration: none;
 
   z-index: 3;
   font-family: "Rock Salt", cursive;
-  margin-left: 15px;
-  // font-size:1.2rem;
+  margin-left: 12px;
   @media screen and (min-width: 768px) {
-    margin-left: 200px;
   }
 `;
 
@@ -49,36 +44,37 @@ const StyledNav = styled.nav`
     props.$mobilenavactive
       ? `
   display: block;
-  
+  top: ${props.top}px;
+  padding-top: ${props.isFirst ? '70px' : '0'};
   `
       : `
   display: none;
-  ` 
-  }
+  `}
 
   gap: 15px;
   position: fixed;
-  top: 0;
+  
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 70px 10px 20px;
+  /* padding: 70px 10px 20px; */
+  padding-right: 10px; 
+  padding-bottom: 100px; 
+  padding-left: 10px;
   align-items: center;
 
   background-color: #333333;
+
   @media screen and (min-width: 768px) {
     display: flex;
     position: static;
     padding: 0;
-
-    /* margin-top:-5px; */
   }
   @media screen and (max-width: 768px) {
     & > Button {
-    width:100%;
-    justify-content: center;
-
-  }
+      width: 100%;
+      justify-content: center;
+    }
   }
 `;
 
@@ -87,27 +83,33 @@ const NavLink = styled(Link)`
   color: #c0c0c0;
   text-decoration: none;
   min-width: 30px;
-  padding: 10px 10px;
+  padding: 10px 3px;
   &:hover {
-    /* text-decoration: underline; */
     color: #dfe5eb;
-    /* opacity: 0.5; */
   }
   &[href="/signup"],
   &[href="/logout"] {
     background-color: #dddddd;
     color: #000000;
-    padding: 7px;
-    border-radius: 10px;
+    padding: 6px 18px;
+    border-radius: 7px;
     text-align: center;
+    &:hover {
+      opacity: 0.9;
+    }
   }
   &[href="/signin"] {
     text-align: center;
     color: #eee;
-    border: 1px solid #aaa;
-    padding: 6px;
+    border: 1px solid #555555;
+    padding: 6px 18px;
     border-radius: 7px;
     margin-bottom: 10px;
+
+    &:hover {
+      /* opacity:0.9; */
+      border: 1px solid #888888;
+    }
   }
   svg {
     height: 20px;
@@ -117,13 +119,12 @@ const NavLink = styled(Link)`
     padding: 0;
     &[href="/signin"] {
       margin-bottom: 0;
-      margin-left: 300px;
+      /* margin-left: 300px; */
     }
   }
 `;
 
 //Responsive
-
 const NavButton = styled.button`
   background-color: transparent;
   width: 35px;
@@ -153,9 +154,15 @@ const SideIcons = styled.div`
   }
 `;
 
+
+
+const CartCount = styled.span`
+  font-weight:bold;
+`;
+
 export default function Header() {
   const session = useSession();
-  console.log(session);
+  // console.log('session status :', session);
   const status = session.status;
   const { cartProducts } = useContext(CartContext);
   //Responsive:
@@ -175,14 +182,19 @@ export default function Header() {
           <div>TECH</div>
           <div>SAMAYLA</div>
         </Logo>
-        <StyledNav $mobilenavactive={mobilenavactive}>
+        <StyledNav $mobilenavactive={mobilenavactive} top={0} isFirst={true}>
           <NavLink href="/">Accueil</NavLink>
           <NavLink href="/products">Tous les produits</NavLink>
           <NavLink href="/categories">Rayons</NavLink>
           <NavLink href="/account">Mon compte</NavLink>
-          <NavLink href="/cart">Mon Panier ({cartProducts.length})</NavLink>
-          {status === "authenticated" && (
-            <Button onClick={logout}>Se déconnecter</Button>
+          
+      <NavLink href="/cart">Mon Panier <CartCount>({cartProducts.length})</CartCount></NavLink>
+      
+        
+        </StyledNav>
+        <StyledNav $mobilenavactive={mobilenavactive} top={300}>
+        {status === "authenticated" && (
+            <Button hover="true" onClick={logout}>Se déconnecter</Button>
           )}
           {status !== "authenticated" && (
             <>
@@ -190,16 +202,12 @@ export default function Header() {
               <NavLink href="/signup">Inscription</NavLink>
             </>
           )}
-
-          {/* <div><Button signin >Se connecter</Button></div> */}
-          {/* <div><Button signup>S&apos;inscrire</Button></div> */}
         </StyledNav>
-        <StyledNav></StyledNav>
         {/* Navigation Icons  */}
         <SideIcons>
-          {/* <Link href={"/search"}>
+          <Link href={"/search"}>
               <SearchIcon />{" "}
-            </Link> */}
+            </Link>
 
           {/* responsive */}
           <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
@@ -207,9 +215,6 @@ export default function Header() {
             {mobilenavactive ? <CloseIcon /> : <BarsIcon />}
           </NavButton>
         </SideIcons>
-
-        {/* <div style={{color:'red'}}>Se connecter</div>
-        <div style={{color:'red'}}>S&apos;inscrire</div> */}
       </Wrapper>
       {/* </Center> */}
     </StyledHeader>

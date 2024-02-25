@@ -20,7 +20,7 @@ const FlyingButtonWrapper = styled.div`
   @keyframes fly {
     100% {
       top: 0;
-      left: 174.5vh;
+      left: 110.5vh;
       opacity: 0;
       display: none;
       max-width: 50px;
