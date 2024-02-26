@@ -61,7 +61,10 @@ export default function FlyingButton(props) {
     imgRef.current.style.left = ev.clientX - 50 + "px";
     imgRef.current.style.top = ev.clientY - 50 + "px";
     setTimeout(() => {
-      imgRef.current.style.display = "none";
+      // This condition to avoid "Cannot read properties of null" if user go to cart page before animation end
+      if (imgRef.current) {
+        imgRef.current.style.display = "none";
+      }
     }, 1000);
   }
   useEffect(() => {

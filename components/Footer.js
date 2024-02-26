@@ -17,7 +17,7 @@ const StyledFooter = styled.div`
   /* justify-content: center;  */
   width: 100%;
   // margin-top: auto;
-  margin-top: 80px;
+  margin-top: 188px;
   border-top: 1px solid #2226;
   @media screen and (min-width: 768px) {
     grid-template-columns: 2fr 1fr;
@@ -90,14 +90,15 @@ export default function Footer() {
           <FooterLink href="/quisommesnous">Qui sommes nous ?</FooterLink>
           <FooterLink href="/contact">Nous contacter</FooterLink>
           <FooterLink href="/recruitment">Recrutement</FooterLink>
-          <FooterLink href="/privacypolicy">
+        
+        </div>
+        <div>
+        <FooterLink href="/privacypolicy">
             Politique de confidentialité
           </FooterLink>
           <FooterLink href="/delivery">Livraison</FooterLink>
-        </div>
-        <div>
-          <FooterLink href="/signup">Inscription</FooterLink>
-          <FooterLink href="/signin">Connexion</FooterLink>
+          {/* <FooterLink href="/signup">Inscription</FooterLink>
+          <FooterLink href="/signin">Connexion</FooterLink> */}
           <FooterLink href="/faq">FAQ</FooterLink>
         </div>
       </LinksContainer>

@@ -24,7 +24,8 @@ const Logo = styled(Link)`
   z-index: 3;
   font-family: "Rock Salt", cursive;
   margin-left: 12px;
-  @media screen and (min-width: 768px) {
+  margin-right:0px;
+  @media screen and (min-width: 821px) {
   }
 `;
 
@@ -33,8 +34,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 821px) {
     justify-content: space-evenly;
+    padding: 10px 50px;
   }
 `;
 
@@ -65,12 +67,12 @@ const StyledNav = styled.nav`
 
   background-color: #333333;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 821px) {
     display: flex;
     position: static;
     padding: 0;
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 821px) {
     & > Button {
       width: 100%;
       justify-content: center;
@@ -115,7 +117,7 @@ const NavLink = styled(Link)`
     height: 20px;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 821px) {
     padding: 0;
     &[href="/signin"] {
       margin-bottom: 0;
@@ -134,7 +136,7 @@ const NavButton = styled.button`
   cursor: pointer;
   position: relative;
   z-index: 3;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 821px) {
     display: none;
   }
 `;
@@ -162,7 +164,7 @@ const CartCount = styled.span`
 
 export default function Header() {
   const session = useSession();
-  // console.log('session status :', session);
+  console.log('session status :', session);
   const status = session.status;
   const { cartProducts } = useContext(CartContext);
   //Responsive:
@@ -193,10 +195,10 @@ export default function Header() {
         
         </StyledNav>
         <StyledNav $mobilenavactive={mobilenavactive} top={300}>
-        {status === "authenticated" && (
+        {status === "authenticated" &&  (
             <Button hover="true" onClick={logout}>Se déconnecter</Button>
           )}
-          {status !== "authenticated" && (
+          {status !== "authenticated" && status !== "loading" && (
             <>
               <NavLink href="/signin">Se connecter</NavLink>
               <NavLink href="/signup">Inscription</NavLink>

@@ -112,20 +112,18 @@ export default function SignInPage() {
   // console.log(errors);
 
   // Connect with credentials
-  const onSubmit = async (data) => {
+  const onSubmit = async ({ email, password }) => {
     try {
-        await signIn('credentials', data);
+        await signIn('credentials', { email, password , callbackUrl: '/' });
     } catch (error) {
-      console.error("Error", error);
-    } finally {
-      
-    }
-  };
+        console.error("Error", error);
+    } 
+};
 
   // Connect with Google 
   async function login() {
     await signIn("google", {
-      callbackUrl: process.env.NEXT_PUBLIC_URL,
+      callbackUrl: '/',
       prompt: "select_account",
     });
   }
