@@ -19,7 +19,7 @@ const StyledFooter = styled.div`
   // margin-top: auto;
   margin-top: 188px;
   border-top: 1px solid #2226;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 821px) {
     grid-template-columns: 2fr 1fr;
   }
 `;
@@ -31,8 +31,8 @@ const LinksContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 0 15px;
-  @media screen and (min-width: 768px) {
-    gap: 100px;
+  @media screen and (min-width: 821px) {
+    gap: 80px;
   }
 `;
 
@@ -67,7 +67,7 @@ const SocialIconWrapper = styled.div`
   margin-left: 60px;
   /* margin-top: 40px; */
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 821px) {
     text-align: center;
     align-items: center;
     margin-bottom: 10px;
