@@ -239,9 +239,12 @@ export default function Header() {
           <Link href={"/search"}>
             <SearchIcon />
           </Link>
-          <Link href={"/cart"} style={{position:'relative'}}>
-            <CartIcon /> <CartCount>{cartProducts.length}</CartCount>
-          </Link>
+          {!mobilenavactive && (
+    <Link href={"/cart"} style={{ position: 'relative' }}>
+      <CartIcon />
+      <CartCount>{cartProducts.length}</CartCount>
+    </Link>
+  )}
 
           {/* responsive */}
           <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
