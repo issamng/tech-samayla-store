@@ -7,10 +7,11 @@ import { RevealWrapper } from "next-reveal";
 
 
 const Bg = styled.div`
-  background-color: #333333;
+  /* background-color: #333333; */
+  background-color:#666  ;
  
   color: #fff;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   
 `;
 
@@ -25,7 +26,7 @@ const Title = styled.h1`
 `;
 
 const Desc = styled.p`
-  color: #aaa;
+  color: #eee;
   font-size: 0.9rem;
 `;
 const ColumnsWrapper = styled.div`

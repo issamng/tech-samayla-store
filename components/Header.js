@@ -12,7 +12,8 @@ import { signOut, useSession } from "next-auth/react";
 import CartIcon from "./icons/CartIcon";
 
 const StyledHeader = styled.header`
-  background-color: #333333;
+  /* background-color: #333333; */
+  background-color: #666;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -66,7 +67,8 @@ const StyledNav = styled.nav`
   padding-left: 10px;
   align-items: center;
 
-  background-color: #333333;
+  /* background-color: #333333; */
+  background-color: #666;
 
   @media screen and (min-width: 821px) {
     display: flex;
@@ -84,10 +86,11 @@ const StyledNav = styled.nav`
 const NavLink = styled(Link)`
   position: relative;
   display: block;
-  color: #c0c0c0;
+  color: #ccc;
   text-decoration: none;
   min-width: 30px;
   padding: 10px 3px;
+  font-weight:500;
   &:hover {
     color: #dfe5eb;
   }

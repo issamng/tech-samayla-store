@@ -11,14 +11,15 @@ const StyledFooter = styled.div`
   bottom: 0;
   margin-bottom: 0;
   /* background-color: #222; */
-  background-color: #333333;
+  /* background-color: #333333; */
+  background-color:  #666;
   display: grid;
   grid-template-columns: 1fr;
   /* justify-content: center;  */
   width: 100%;
   // margin-top: auto;
   margin-top: 188px;
-  border-top: 1px solid #2226;
+  /* border-top: 1px solid #2226; */
   @media screen and (min-width: 821px) {
     grid-template-columns: 2fr 1fr;
   }
@@ -37,7 +38,8 @@ const LinksContainer = styled.div`
 `;
 
 const FooterLink = styled(Link)`
-  color: #c0c0c0;
+  /* color: #c0c0c0; */
+  color: #ddd;
   text-decoration: none;
   display: block;
   padding: 5px 0;
