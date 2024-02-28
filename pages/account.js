@@ -18,6 +18,8 @@ import PasswordIcon from "@/components/icons/PasswordIcon";
 import Link from "next/link";
 import Title from "@/components/Title";
 import Spinner from "@/components/Spinner";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -53,7 +55,7 @@ const InputField = styled.input`
   box-sizing: border-box;
   font-family: inherit;
   border: none;
-  border-bottom: 2px solid #d1d1d4;
+  border-bottom: 1px solid ${(props) => (props.hasError ? "red" : "#d1d1d4")};
   font-weight: 500;
   &:active,
   &:hover,
@@ -105,6 +107,12 @@ const SuccessMessage = styled.div`
   font-size: 0.9rem;
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin: -15px 0 13px 5px;
+  font-size: 0.8rem;
+`;
+
 export default function AccountPage() {
   const { data: session } = useSession();
   const [firstName, setFirstName] = useState("");
@@ -129,12 +137,21 @@ export default function AccountPage() {
       callbackUrl: process.env.NEXT_PUBLIC_URL,
     });
   }
+  // Login with Google
   async function login() {
     await signIn("google", {
-      callbackUrl: process.env.NEXT_PUBLIC_URL,
+      callbackUrl: '/account',
       prompt: "select_account",
     });
   }
+    // Connect with credentials
+    const onSubmit = async ({ email, password }) => {
+      try {
+          await signIn('credentials', { email, password , callbackUrl: '/account' });
+      } catch (error) {
+          console.error("Error", error);
+      } 
+  };
   //Account informations
   function updateUserInformation() {
     const data = {
@@ -204,14 +221,21 @@ export default function AccountPage() {
   }
 
   //Login Form
+  const schema = yup.object({
+    email: yup.string().email("Format invalide").required("Entrez votre email"),
+    password: yup.string().required("Entrez votre mot de passe"),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  // const onSubmit = (data) => console.log(data);
+  // console.log(errors);
 
   return (
     <>
@@ -352,7 +376,7 @@ export default function AccountPage() {
 
               {session && (
                 <Button primary="true" hover="true" onClick={logout}>
-                  Me déconnecter
+                  Se déconnecter
                 </Button>
               )}
               {!session && (
@@ -368,12 +392,16 @@ export default function AccountPage() {
                       <InputField
                         type="email"
                         placeholder="Email"
-                        {...register("Email", {
+                        {...register("email", {
                           required: true,
                           pattern:
                             /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
                         })}
+                        hasError={errors.email}
                       />
+                      {errors.email && (
+                        <ErrorMessage>{errors.email.message}</ErrorMessage>
+                      )}
                     </InputContainer>
                     <InputContainer>
                       <i>
@@ -382,18 +410,21 @@ export default function AccountPage() {
                       <InputField
                         type="password"
                         placeholder="Mot de passe"
-                        {...register("Password", {
+                        {...register("password", {
                           required: true,
                           max: 14,
                           min: 6,
                           maxLength: 14,
                         })}
+                        hasError={errors.password}
                       />
+                      {errors.email && (
+                        <ErrorMessage>{errors.password.message}</ErrorMessage>
+                      )}
                     </InputContainer>
                     <SubmitButton
                       primary="true"
                       hover="true"
-                      onClick={onSubmit}
                     >
                       Connexion
                     </SubmitButton>

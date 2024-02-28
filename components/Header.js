@@ -9,6 +9,7 @@ import CloseIcon from "./icons/CloseIcon";
 import Image from "next/image";
 import Button from "./Button";
 import { signOut, useSession } from "next-auth/react";
+import CartIcon from "./icons/CartIcon";
 
 const StyledHeader = styled.header`
   background-color: #333333;
@@ -24,7 +25,7 @@ const Logo = styled(Link)`
   z-index: 3;
   font-family: "Rock Salt", cursive;
   margin-left: 12px;
-  margin-right:0px;
+  margin-right: 0px;
   @media screen and (min-width: 821px) {
   }
 `;
@@ -47,7 +48,7 @@ const StyledNav = styled.nav`
       ? `
   display: block;
   top: ${props.top}px;
-  padding-top: ${props.isFirst ? '70px' : '0'};
+  padding-top: ${props.isFirst ? "70px" : "0"};
   `
       : `
   display: none;
@@ -55,13 +56,13 @@ const StyledNav = styled.nav`
 
   gap: 15px;
   position: fixed;
-  
+
   bottom: 0;
   left: 0;
   right: 0;
   /* padding: 70px 10px 20px; */
-  padding-right: 10px; 
-  padding-bottom: 100px; 
+  padding-right: 10px;
+  padding-bottom: 100px;
   padding-left: 10px;
   align-items: center;
 
@@ -81,6 +82,7 @@ const StyledNav = styled.nav`
 `;
 
 const NavLink = styled(Link)`
+  position: relative;
   display: block;
   color: #c0c0c0;
   text-decoration: none;
@@ -100,7 +102,8 @@ const NavLink = styled(Link)`
       opacity: 0.9;
     }
   }
-  &[href="/signin"] {
+  &[href="/signin"],
+  &[href="/account"] {
     text-align: center;
     color: #eee;
     border: 1px solid #555555;
@@ -119,7 +122,8 @@ const NavLink = styled(Link)`
 
   @media screen and (min-width: 821px) {
     padding: 0;
-    &[href="/signin"] {
+    &[href="/signin"],
+    &[href="/account"] {
       margin-bottom: 0;
       /* margin-left: 300px; */
     }
@@ -142,31 +146,41 @@ const NavButton = styled.button`
 `;
 
 const SideIcons = styled.div`
+  /* position: relative; */
   display: flex;
   align-items: center;
   margin-top: 5px;
+ 
+  gap: 5px;
   a {
     display: inline-block;
     min-width: 20px;
     color: white;
     svg {
-      width: 17px;
-      height: 17px;
+      width: 20px;
+      height: 20px;
     }
   }
 `;
 
-
-
 const CartCount = styled.span`
-  font-weight:bold;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0px 3px;
+  position: absolute;
+  top: -0.8rem; /* Adjust this value to position it properly */
+  right: -0.6rem; /* Adjust this value to position it properly */
+  font-size: 0.8rem;
+  color: black;
 `;
 
 export default function Header() {
   const session = useSession();
-  console.log('session status :', session);
   const status = session.status;
-  const { cartProducts } = useContext(CartContext);
+  console.log("session status :", status);
+
+  const { cartProducts, clearCart } = useContext(CartContext);
   //Responsive:
   const [mobilenavactive, setMobileNavActive] = useState(false);
 
@@ -174,7 +188,16 @@ export default function Header() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
     });
+
+    // Clear Cart after user logout
+
+    // setTimeout(() => {
+    //   if (window.location.pathname === '/') {
+    //     clearCart();
+    //   }
+    // }, 1000);
   }
+
   return (
     <StyledHeader>
       {/* <Center> */}
@@ -188,15 +211,19 @@ export default function Header() {
           <NavLink href="/">Accueil</NavLink>
           <NavLink href="/products">Tous les produits</NavLink>
           <NavLink href="/categories">Rayons</NavLink>
-          <NavLink href="/account">Mon compte</NavLink>
-          
-      <NavLink href="/cart">Mon Panier <CartCount>({cartProducts.length})</CartCount></NavLink>
-      
-        
+          {/* {status !== "authenticated" && status !== "loading" && (
+            <NavLink href="/">Mon compte</NavLink>
+          )} */}
+          <NavLink href="/contact">Contact</NavLink>
         </StyledNav>
-        <StyledNav $mobilenavactive={mobilenavactive} top={300}>
-        {status === "authenticated" &&  (
-            <Button hover="true" onClick={logout}>Se déconnecter</Button>
+        <StyledNav $mobilenavactive={mobilenavactive} top={250}>
+          {status === "authenticated" && (
+            <>
+              <NavLink href="/account">Mon compte</NavLink>
+              <Button hover="true" onClick={logout}>
+                Se déconnecter
+              </Button>
+            </>
           )}
           {status !== "authenticated" && status !== "loading" && (
             <>
@@ -205,18 +232,23 @@ export default function Header() {
             </>
           )}
         </StyledNav>
+     
         {/* Navigation Icons  */}
         <SideIcons>
+          
           <Link href={"/search"}>
-              <SearchIcon />{" "}
-            </Link>
+            <SearchIcon />
+          </Link>
+          <Link href={"/cart"} style={{position:'relative'}}>
+            <CartIcon /> <CartCount>{cartProducts.length}</CartCount>
+          </Link>
 
           {/* responsive */}
           <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
-            {/* <BarsIcon /> */}
             {mobilenavactive ? <CloseIcon /> : <BarsIcon />}
           </NavButton>
         </SideIcons>
+       
       </Wrapper>
       {/* </Center> */}
     </StyledHeader>

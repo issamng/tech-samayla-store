@@ -10,12 +10,12 @@ export function CartContextProvider({ children }) {
     if (cartProducts?.length > 0) {
       ls?.setItem("cart", JSON.stringify(cartProducts));
     }
-  }, [cartProducts]);
+  }, [cartProducts, ls]);
   useEffect(() => {
     if (ls && ls.getItem("cart")) {
       setCartProducts(JSON.parse(ls.getItem("cart")));
     }
-  }, []);
+  }, [ls]);
 
   function addProduct(productId) {
     setCartProducts((prev) => [...prev, productId]);
@@ -23,14 +23,32 @@ export function CartContextProvider({ children }) {
   function removeProduct(productId) {
     setCartProducts((prev) => {
       const pos = prev.indexOf(productId);
+  
       if (pos !== -1) {
-        return prev.filter((value, index) => index !== pos);
+        
+        const updatedCart = prev.filter((value, index) => index !== pos);
+  
+        // Remove local storage when user remove all products from cart 
+        if (updatedCart.length === 0) {
+          ls.removeItem("cart");
+        // Or keep the current state 
+        } else {
+          ls.setItem("cart", JSON.stringify(updatedCart));
+        }
+  
+        return updatedCart;
       }
+  
       return prev;
     });
   }
+  
+  
   function clearCart() {
+    console.log("Clearing cart...");
     setCartProducts([]);
+    ls.removeItem("cart");
+    console.log("Cart cleared:", cartProducts);
   }
   return (
     <CartContext.Provider

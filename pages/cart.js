@@ -141,13 +141,13 @@ export default function CartPage() {
 
     if (session) {
       axios.get("/api/userInformation").then((response) => {
-        setFirstName(response.data.firstName);
-        setLastName(response.data.lastName);
-        setEmail(response.data.email);
-        setCity(response.data.city);
-        setPostalCode(response.data.postalCode);
-        setAdress(response.data.adress);
-        setCountry(response.data.country);
+        setFirstName(response.data?.firstName);
+        setLastName(response.data?.lastName);
+        setEmail(response.data?.email);
+        setCity(response.data?.city);
+        setPostalCode(response.data?.postalCode);
+        setAdress(response.data?.adress);
+        setCountry(response.data?.country);
       });
     }
 

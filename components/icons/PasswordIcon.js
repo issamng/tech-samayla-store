@@ -8,7 +8,7 @@ const StyledPasswordIcon = styled.svg`
     top: 6px;
   `;
 
-export default function UserIcon({ className = "w-6 h-6" }) {
+export default function PasswordIcon({ className = "w-6 h-6" }) {
   
 
   return (

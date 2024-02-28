@@ -65,7 +65,6 @@ const SocialIconWrapper = styled.div`
   gap: 20px;
   justify-content: center;
   margin-left: 60px;
-  /* margin-top: 40px; */
 
   @media screen and (max-width: 821px) {
     text-align: center;
