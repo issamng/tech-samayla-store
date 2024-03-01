@@ -37,8 +37,8 @@ const ColumnsWrapper = styled.div`
   /* opacity: ${(props) => (props.revealed ? 1 : 0)}; */
 
   .main {
-    /* max-width: 100%; */
-    max-height: 400px;
+    /* max-width: 100%;
+    max-height: 400px; */
     display: block;
     margin: 0 auto;
   }
@@ -103,7 +103,7 @@ export default function Featured({ product }) {
           </Column>
           <Column>
             <RevealWrapper>
-              <Image className={"main"} src={product.images?.[0]} width={400} height={400} priority alt="" />
+              <Image className={"main"} src={product.images?.[0]} width={350} height={350} priority alt="" />
             </RevealWrapper>
           </Column>
         </ColumnsWrapper>
