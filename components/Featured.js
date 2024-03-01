@@ -4,6 +4,7 @@ import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
 import FlyingButton from "./FlyingButton";
 import { RevealWrapper } from "next-reveal";
+import Image from "next/image";
 
 
 const Bg = styled.div`
@@ -35,9 +36,9 @@ const ColumnsWrapper = styled.div`
   gap: 40px;
   /* opacity: ${(props) => (props.revealed ? 1 : 0)}; */
 
-  img.main {
-    max-width: 100%;
-    max-height: 320px;
+  .main {
+    /* max-width: 100%; */
+    max-height: 400px;
     display: block;
     margin: 0 auto;
   }
@@ -49,9 +50,9 @@ const ColumnsWrapper = styled.div`
     div: nth-child(1) {
       order: 0;
     }
-    img.main {
-      max-width: 100%;
-      max-height: 100%;
+    .main {
+      /* max-width: 100%;
+      max-height: 100%; */
     }
   }
 `;
@@ -102,7 +103,7 @@ export default function Featured({ product }) {
           </Column>
           <Column>
             <RevealWrapper>
-              <img className={"main"} src={product.images?.[0]} alt="" />
+              <Image className={"main"} src={product.images?.[0]} width={400} height={400} priority alt="" />
             </RevealWrapper>
           </Column>
         </ColumnsWrapper>

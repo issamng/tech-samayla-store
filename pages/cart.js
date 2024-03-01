@@ -11,6 +11,7 @@ import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -43,15 +44,16 @@ const ProductImageBox = styled.div`
   justify-content: center;
   border-radius: 10px;
   margin-bottom: 3px;
-  img {
+  .productImageBox {
     max-width: 60px;
     max-height: 60px;
+    /* margin:100px; */
   }
   @media screen and (min-width: 768px) {
     width: 100px;
     height: 100px;
     padding: 10px;
-    img {
+    .productImageBox{
       max-width: 100px;
       max-height: 100px;
     }
@@ -246,7 +248,8 @@ export default function CartPage() {
                         <tr key={product._id}>
                           <ProductInfoCell>
                             <ProductImageBox>
-                              <img src={product.images[0]} alt="" /> <br />
+                              <Image className={"productImageBox"} src={product.images[0]} width={100} height={100} alt="" />
+                              {/* <img src={product.images[0]} alt="" />  */}
                             </ProductImageBox>
 
                             <div>{product.title}</div>

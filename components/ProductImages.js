@@ -1,15 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`;
+// const Image = styled.img`
+//   max-width: 100%;
+//   max-height: 100%;
+// `;
 
-const MainImage = styled.img`
-  max-width: 100%;
-  max-height: 200px;
-`;
+// const MainImage = styled.img`
+//   max-width: 100%;
+//   max-height: 200px;
+// `;
+
 const ImageButtons = styled.div`
   display: flex;
   gap: 10px;
@@ -32,10 +34,19 @@ border-color: Transparent;
   padding: 2px;
   cursor: pointer;
   border-radius: 5px;
+
+  .imageButton{
+    max-width: 100%;
+    max-height: 100%;
+  }
 `;
 
 const MainImageWrapper = styled.div`
   text-align: center;
+  .mainImage{
+  max-width: 100%;
+  max-height: 200px;
+  }
 `;
 
 export default function ProductImages({ images }) {
@@ -44,7 +55,8 @@ export default function ProductImages({ images }) {
   return (
     <>
       <MainImageWrapper>
-        <MainImage src={activeImage} />
+        
+        <Image className={"mainImage"} src={activeImage} width={220} height={200} alt=""  />
       </MainImageWrapper>
       <ImageButtons>
         {images.map((image) => (
@@ -53,7 +65,8 @@ export default function ProductImages({ images }) {
             active={image === activeImage}
             onClick={() => setActiveImage(image)}
           >
-            <Image src={image} alt="" />
+            
+            <Image className={"imageButton"} src={image} width={40} height={40} alt="" />
           </ImageButton>
         ))}
       </ImageButtons>

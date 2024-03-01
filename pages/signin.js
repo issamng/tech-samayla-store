@@ -17,7 +17,7 @@ const FormWrapper = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   width: 60%;
-  margin: 80px auto;
+  margin: 100px auto;
   @media screen and (max-width: 768px) {
     width: 70%;
   }

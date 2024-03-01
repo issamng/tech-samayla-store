@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import styled from "styled-components";
 import Center from "./Center";
 import Link from "next/link";
@@ -48,8 +49,8 @@ const StyledNav = styled.nav`
     props.$mobilenavactive
       ? `
   display: block;
-  top: ${props.top}px;
-  padding-top: ${props.isFirst ? "70px" : "0"};
+  top: ${props.$top}px;
+  padding-top: ${props.$isFirst ? "70px" : "0"};
   `
       : `
   display: none;
@@ -97,7 +98,7 @@ const NavLink = styled(Link)`
   &[href="/signup"],
   &[href="/logout"] {
     background-color: #dddddd;
-    color: #000000;
+    color: #333;
     padding: 6px 18px;
     border-radius: 7px;
     text-align: center;
@@ -109,7 +110,8 @@ const NavLink = styled(Link)`
   &[href="/account"] {
     text-align: center;
     color: #eee;
-    border: 1px solid #555555;
+    /* border: 1px solid #555555; */
+    border: 1px solid #999;
     padding: 6px 18px;
     border-radius: 7px;
     margin-bottom: 10px;
@@ -210,7 +212,7 @@ export default function Header() {
           <div>TECH</div>
           <div>SAMAYLA</div>
         </Logo>
-        <StyledNav $mobilenavactive={mobilenavactive} top={0} isFirst={true}>
+        <StyledNav $mobilenavactive={mobilenavactive} $top={0} $isFirst={true}>
           <NavLink href="/">Accueil</NavLink>
           <NavLink href="/products">Tous les produits</NavLink>
           <NavLink href="/categories">Rayons</NavLink>
@@ -219,7 +221,7 @@ export default function Header() {
           )} */}
           <NavLink href="/contact">Contact</NavLink>
         </StyledNav>
-        <StyledNav $mobilenavactive={mobilenavactive} top={250}>
+        <StyledNav $mobilenavactive={mobilenavactive} $top={250}>
           {status === "authenticated" && (
             <>
               <NavLink href="/account">Mon compte</NavLink>
@@ -231,7 +233,7 @@ export default function Header() {
           {status !== "authenticated" && status !== "loading" && (
             <>
               <NavLink href="/signin">Se connecter</NavLink>
-              <NavLink href="/signup">Inscription</NavLink>
+              <NavLink href="/signup">S'inscrire</NavLink>
             </>
           )}
         </StyledNav>

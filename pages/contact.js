@@ -15,7 +15,7 @@ const FormWrapper = styled.div`
   padding: 20px;
   /* margin-top: 40px; */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 80px auto;
+  margin: 100px auto;
 `;
 
 const FormTitle = styled.h2`
@@ -64,7 +64,7 @@ const SubmitButton = styled(Button)`
 const ErrorMessage = styled.div`
   color: red;
   margin: -15px 0 13px 5px;
-  font-size:.8rem;
+  font-size: 0.8rem;
 `;
 
 const SuccessMessage = styled.div`
@@ -75,15 +75,21 @@ const SuccessMessage = styled.div`
 `;
 
 export default function ContactPage() {
-
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
-    lastName: yup.string().max(50, 'Le nom ne doit pas dépasser 50 caractères.'),
-    firstName: yup.string().required("Entrez votre prénom").max(50, 'Le prénom ne doit pas dépasser 50 caractères.'),
+    lastName: yup
+      .string()
+      .max(50, "Le nom ne doit pas dépasser 50 caractères."),
+    firstName: yup
+      .string()
+      .required("Entrez votre prénom")
+      .max(50, "Le prénom ne doit pas dépasser 50 caractères."),
     Email: yup.string().email("Format invalide").required("Entrez votre email"),
-    Objet: yup.string().max(100, "L'objet ne doit pas dépasser 100 caractères."),
+    Objet: yup
+      .string()
+      .max(100, "L'objet ne doit pas dépasser 100 caractères."),
     Message: yup.string().required("Entrez votre message"),
   });
 
@@ -110,15 +116,19 @@ export default function ContactPage() {
           Accept: "application/json",
         },
       });
-  
-      if(response.ok){
+
+      if (response.ok) {
         reset();
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 3000);
       } else {
-        console.error("Error submitting data:", response.status, response.statusText);
+        console.error(
+          "Error submitting data:",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("An error occurred during the submission:", error);
@@ -126,7 +136,6 @@ export default function ContactPage() {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <>
@@ -139,9 +148,8 @@ export default function ContactPage() {
               type="text"
               placeholder="Nom"
               {...register("lastName", { maxLength: 50 })}
-              
             />
-             {errors.lastName && (
+            {errors.lastName && (
               <ErrorMessage>{errors.lastName.message}</ErrorMessage>
             )}
             <InputField
@@ -176,18 +184,20 @@ export default function ContactPage() {
             />
             <ErrorMessage>{errors.Message?.message}</ErrorMessage>
             <SubmitButton primary="true" hover="true" disabled={isLoading}>
-            {isLoading ? <Spinner fullWidth={true} white={true} /> : 'Envoyer'}
+              {isLoading ? (
+                <Spinner fullWidth={true} white={true} />
+              ) : (
+                "Envoyer"
+              )}
             </SubmitButton>
             {showSuccessMessage && (
-                    <SuccessMessage>
-                      Votre message a été envoyé avec succès.
-                    </SuccessMessage>
-                  )}
+              <SuccessMessage>
+                Votre message a été envoyé avec succès.
+              </SuccessMessage>
+            )}
           </form>
         </FormWrapper>
       </Center>
-
-      {/* <div style={{marginTop:'50px'}}><img src="advice.jpg" style={{ width: '50%', height: '350px' }} /> </div> */}
 
       <Footer />
     </>

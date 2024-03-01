@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button, { ButtonStyle } from "./Button";
 import { useContext, useEffect, useRef, useState } from "react";
 import { CartContext } from "./CartContext";
+import Image from "next/image";
 
 const FlyingButtonWrapper = styled.div`
   button {
@@ -41,9 +42,9 @@ const FlyingButtonWrapper = styled.div`
     }
   }
 
-  img {
-    max-width: 100px;
-    max-height: 100px;
+  .flyingImage {
+    /* max-width: 100px;
+    max-height: 100px; */
     opacity: 1;
     position: fixed;
     display: none;
@@ -86,7 +87,7 @@ export default function FlyingButton(props) {
         onClick={() => addProduct(props._id)}
         primary={1}
       >
-        <img src={props.src} alt="" ref={imgRef} />
+        <Image className={"flyingImage"} src={props.src} alt="" ref={imgRef} width={80} height={80} />
         <Button onClick={(ev) => sendImageToCartAnimation(ev)} {...props} />
       </FlyingButtonWrapper>
     </>

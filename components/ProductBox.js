@@ -6,6 +6,7 @@ import HeartOutlineIcon from "./icons/HeartOutlineIcon";
 import HeartSolidIcon from "./icons/HeartSolidIcon";
 import axios from "axios";
 import { useState } from "react";
+import Image from "next/image";
 
 const ProductWrapper = styled.div``;
 
@@ -19,7 +20,7 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   border-radius: 10px;
   position: relative;
-  img {
+  .productBoxImage {
     max-width: 100%;
     max-height: 110px;
   }
@@ -110,7 +111,7 @@ export default function ProductBox({
           <WishListButton wished={isWished} onClick={addToWishList}>
             {isWished ? <HeartSolidIcon /> : <HeartOutlineIcon />}
           </WishListButton>
-          <img src={images?.[0]} alt="" />
+          <Image className={"productBoxImage"} src={images?.[0]} alt="" width={100} height={100}   />
         </div>
       </WhiteBox>
       <ProductInfoBox>
