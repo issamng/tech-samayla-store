@@ -8,7 +8,9 @@ import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+
+`;
 
 const WhiteBox = styled(Link)`
   background-color: #fff;
@@ -20,6 +22,11 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   border-radius: 10px;
   position: relative;
+  
+  transition: transform 0.3s ease;
+  &:hover{
+    transform: scale(1.07);
+  }
   .productBoxImage {
     max-width: 100%;
     max-height: 110px;

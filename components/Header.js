@@ -1,13 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import styled from "styled-components";
-import Center from "./Center";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/Bars";
 import SearchIcon from "./icons/SearchIcon";
 import CloseIcon from "./icons/CloseIcon";
-import Image from "next/image";
 import Button from "./Button";
 import { signOut, useSession } from "next-auth/react";
 import CartIcon from "./icons/CartIcon";
@@ -183,8 +181,6 @@ const CartCount = styled.span`
 export default function Header() {
   const session = useSession();
   const status = session.status;
-  console.log("session status :", status);
-
   const { cartProducts, clearCart } = useContext(CartContext);
   //Responsive:
   const [mobilenavactive, setMobileNavActive] = useState(false);
@@ -216,9 +212,6 @@ export default function Header() {
           <NavLink href="/">Accueil</NavLink>
           <NavLink href="/products">Tous les produits</NavLink>
           <NavLink href="/categories">Rayons</NavLink>
-          {/* {status !== "authenticated" && status !== "loading" && (
-            <NavLink href="/">Mon compte</NavLink>
-          )} */}
           <NavLink href="/contact">Contact</NavLink>
         </StyledNav>
         <StyledNav $mobilenavactive={mobilenavactive} $top={250}>
