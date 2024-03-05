@@ -50,6 +50,9 @@ const ShowAllSquare = styled(Link)`
   justify-content: center;
   color: #555;
   text-decoration: none;
+  &:hover{
+background-color: #ccc;
+}
 `;
 export default function CategoriesPage({
   mainCategories,

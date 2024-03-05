@@ -8,9 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
 
-const ProductWrapper = styled.div`
-
-`;
+const ProductWrapper = styled.div``;
 
 const WhiteBox = styled(Link)`
   background-color: #fff;
@@ -22,9 +20,8 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   border-radius: 10px;
   position: relative;
-  
   transition: transform 0.3s ease;
-  &:hover{
+  &:hover {
     transform: scale(1.07);
   }
   .productBoxImage {
@@ -89,9 +86,9 @@ export default function ProductBox({
   title,
   prix,
   images,
-  wished=false,
+  wished = false,
   // When remove product from wishlist (from the acount page)
-  removeFromWishlist=()=>{},
+  removeFromWishlist = () => {},
 }) {
   const url = "/product/" + _id;
   //Add to wish list
@@ -105,11 +102,12 @@ export default function ProductBox({
     if (nextValue === false && removeFromWishlist) {
       removeFromWishlist(_id);
     }
-    axios.post('/api/wishlist', {
-      product:_id,
-    }).then(() => {});
+    axios
+      .post("/api/wishlist", {
+        product: _id,
+      })
+      .then(() => {});
     setIsWished(nextValue);
-
   }
   return (
     <ProductWrapper>
@@ -118,14 +116,20 @@ export default function ProductBox({
           <WishListButton wished={isWished} onClick={addToWishList}>
             {isWished ? <HeartSolidIcon /> : <HeartOutlineIcon />}
           </WishListButton>
-          <Image className={"productBoxImage"} src={images?.[0]} alt="" width={100} height={100}   />
+          <Image
+            className={"productBoxImage"}
+            src={images?.[0]}
+            alt=""
+            width={100}
+            height={100}
+          />
         </div>
       </WhiteBox>
       <ProductInfoBox>
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>{prix}€</Price>
-          <FlyingButton _id={_id} src={images?.[0]} hover={1} >
+          <FlyingButton _id={_id} src={images?.[0]} hover={1}>
             <CartIcon />
           </FlyingButton>
         </PriceRow>
