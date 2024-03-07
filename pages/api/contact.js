@@ -20,7 +20,7 @@ export default async function handle(req, res) {
           Nom: ${data.lastName}
           Prénom: ${data.firstName}
           Email: ${data.Email}
-          Object: ${data.Subject}
+          Objet: ${data.Subject}
           Message: ${data.Message}
         `,
         html: `
@@ -28,7 +28,7 @@ export default async function handle(req, res) {
           <p><b>Nom:</b> ${data.lastName}</p>
           <p><b>Prénom:</b> ${data.firstName}</p>
           <p><b>Email:</b> ${data.Email}</p>
-          <p><b>Object:</b> ${data.Subject}</p>
+          <p><b>Objet:</b> ${data.Subject}</p>
           <p><b>Message:</b> ${data.Message}</p>
         `,
       });
