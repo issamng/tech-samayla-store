@@ -8,9 +8,6 @@ import bcrypt from "bcrypt";
 import { mongooseConnect } from "@/lib/mongoose";
 
 
-
-
-
 export const authOptions = {
   // adapter: MongoDBAdapter(clientPromise),
 
@@ -42,8 +39,6 @@ export const authOptions = {
 
         const user = await LocalUser.findOne({ email });
         if (user && bcrypt.compareSync(password, user.password)) {
-          console.log('test');
-          console.log(user);
           return user;
         }
 

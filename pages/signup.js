@@ -122,9 +122,6 @@ export default function SignUpPage() {
     firstName: yup.string().required("Entrez votre prénom").max(50),
     email: yup.string().email("Format invalide").required("Entrez votre email"),
     password: yup.string().required("Entrez votre mot de passe"),
-    // PasswordConfirmation: yup
-    //   .string()
-    //   .required("Entrez a nouveau votre mot de passe"),
   });
 
   const {
@@ -158,7 +155,6 @@ export default function SignUpPage() {
       setError(false);
       setIsLoading(true);
       const sanitizedData = removeCircularReferences(data);
-
       const response = await fetch("/api/signup", {
         method: "POST",
         body: JSON.stringify(sanitizedData),
@@ -171,15 +167,12 @@ export default function SignUpPage() {
       if (response.ok) {
         reset();
         setShowSuccessMessage(true);
-        // setTimeout(() => {
-        //   setShowSuccessMessage(false);
-        // }, 3000);
       } else {
         setError(true)
         console.error("Server error:", response.statusText);
       }
     } catch (error) {
-      console.error("Error in fetch call:", error);
+      console.error("Error", error);
     } finally {
       setIsLoading(false);
     }

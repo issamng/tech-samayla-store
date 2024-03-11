@@ -1,6 +1,7 @@
 import { CartContextProvider } from "@/components/CartContext";
 import { SessionProvider } from "next-auth/react";
-import  { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
+import { Analytics } from "@vercel/analytics/react";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -20,16 +21,20 @@ hr{
 `;
 // const PageWrapper = styled.div`
 
-  // position: relative;
+// position: relative;
 //   display: flex;
 //   flex-direction: column;
 //   min-height: 100vh;
 
 //  `;
 
-export default function App({ Component, pageProps: {session, ...pageProps} }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <>
+      <Analytics />
       <GlobalStyles />
       <SessionProvider session={session}>
         <CartContextProvider>
