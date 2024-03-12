@@ -132,6 +132,8 @@ export default function AccountPage() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   //Spinner
   const [loading, setLoading] = useState(false);
+  // State for the case of invalid password
+  const [error, setError] = useState(null);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -140,17 +142,29 @@ export default function AccountPage() {
   // Login with Google
   async function login() {
     await signIn("google", {
-      callbackUrl: '/account',
+      callbackUrl: "/account",
       prompt: "select_account",
     });
   }
-    // Connect with credentials
-    const onSubmit = async ({ email, password }) => {
-      try {
-          await signIn('credentials', { email, password , callbackUrl: '/account' });
-      } catch (error) {
-          console.error("Error", error);
-      } 
+  // Connect with credentials
+  const onSubmit = async ({ email, password }) => {
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect:false,
+        callbackUrl: "/account",
+      });
+      if (!result?.ok) {
+        console.error("Sign-in unsuccessful:", result);
+        setError(
+          "Votre adresse e-mail ou votre mot de passe est incorrect. Veuillez réessayer."
+        );
+      }
+    } catch (error) {
+      console.error("Error", error);
+      setError("Une erreur s'est produite, veuillez réessayer ultérieurement.");
+    }
   };
   //Account informations
   function updateUserInformation() {
@@ -222,7 +236,14 @@ export default function AccountPage() {
 
   //Login Form
   const schema = yup.object({
-    email: yup.string().email("Format invalide").required("Entrez votre email"),
+    email: yup
+      .string()
+      .email("L'adresse email saisie n'est pas valide.")
+      .required("Entrez votre email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "L'adresse email saisie n'est pas valide."
+      ),
     password: yup.string().required("Entrez votre mot de passe"),
   });
 
@@ -394,8 +415,6 @@ export default function AccountPage() {
                         placeholder="Email"
                         {...register("email", {
                           required: true,
-                          pattern:
-                            /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
                         })}
                         hasError={errors.email}
                       />
@@ -412,20 +431,18 @@ export default function AccountPage() {
                         placeholder="Mot de passe"
                         {...register("password", {
                           required: true,
-                          max: 14,
-                          min: 6,
-                          maxLength: 14,
                         })}
+                        onFocus={() => setError(null)}
                         hasError={errors.password}
                       />
-                      {errors.email && (
+                      {errors.password && (
                         <ErrorMessage>{errors.password.message}</ErrorMessage>
                       )}
+                      {error && errors.password?.type !== "required" && (
+                        <ErrorMessage>{error}</ErrorMessage>
+                      )}
                     </InputContainer>
-                    <SubmitButton
-                      primary="true"
-                      hover="true"
-                    >
+                    <SubmitButton primary="true" hover="true">
                       Connexion
                     </SubmitButton>
                   </form>

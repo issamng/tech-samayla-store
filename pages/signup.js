@@ -120,8 +120,15 @@ export default function SignUpPage() {
   const schema = yup.object({
     lastName: yup.string().required("Entrez votre nom").max(50),
     firstName: yup.string().required("Entrez votre prénom").max(50),
-    email: yup.string().email("Format invalide").required("Entrez votre email"),
-    password: yup.string().required("Entrez votre mot de passe"),
+    email: yup
+    .string()
+    .email("Format invalide")
+    .required("Entrez votre email")
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,"Format invalide"),
+    password: yup.string()
+    .required("Entrez votre mot de passe")
+    .min(6, "Le mot de passe doit contenir au moins 6 caractères")
+    .matches(/^(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$/, "Le mot de passe doit contenir au moins un chiffre et un caractère spécial"),
   });
 
   const {
@@ -208,7 +215,7 @@ export default function SignUpPage() {
               placeholder="Email"
               {...register("email", {
                 required: true,
-                pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
+                
               })}
               hasError={errors.email}
             />
@@ -220,9 +227,6 @@ export default function SignUpPage() {
               placeholder="Mot de passe"
               {...register("password", {
                 required: true,
-                max: 14,
-                min: 6,
-                maxLength: 14,
               })}
               hasError={errors.password} 
             />

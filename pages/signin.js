@@ -10,6 +10,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useState } from "react";
 
 const FormWrapper = styled.div`
   background-color: #f8f8f8;
@@ -95,8 +96,18 @@ const ErrorMessage = styled.div`
 `;
 
 export default function SignInPage() {
+  // State for the case of invalid password
+  const [error, setError] = useState(null);
+
   const schema = yup.object({
-    email: yup.string().email("Format invalide").required("Entrez votre email"),
+    email: yup
+      .string()
+      .email("L'adresse email saisie n'est pas valide.")
+      .required("Entrez votre email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "L'adresse email saisie n'est pas valide."
+      ),
     password: yup.string().required("Entrez votre mot de passe"),
   });
 
@@ -114,16 +125,27 @@ export default function SignInPage() {
   // Connect with credentials
   const onSubmit = async ({ email, password }) => {
     try {
-        await signIn('credentials', { email, password , callbackUrl: '/' });
-    } catch (error) {
-        console.error("Error", error);
-    } 
-};
+      // Sign in without automatic redirection
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
+      });
 
-  // Connect with Google 
+      if (!result?.ok) {
+        setError("Votre adresse e-mail ou votre mot de passe est incorrect. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Error", error);
+      setError("Une erreur s'est produite, veuillez réessayer ultérieurement.");
+    }
+  };
+
+  // Connect with Google
   async function login() {
     await signIn("google", {
-      callbackUrl: '/',
+      callbackUrl: "/",
       prompt: "select_account",
     });
   }
@@ -145,7 +167,6 @@ export default function SignInPage() {
                 placeholder="Email"
                 {...register("email", {
                   required: true,
-                  pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
                 })}
                 hasError={errors.email}
               />
@@ -163,14 +184,15 @@ export default function SignInPage() {
                 placeholder="Mot de passe"
                 {...register("password", {
                   required: true,
-                  max: 14,
-                  min: 6,
-                  maxLength: 14,
-                })}
+                })} 
+                onFocus={() => setError(null)}
                 hasError={errors.password}
               />
               {errors.password && (
                 <ErrorMessage>{errors.password.message}</ErrorMessage>
+              )}
+              {error && errors.password?.type !== "required" && (
+                <ErrorMessage>{error}</ErrorMessage>
               )}
             </InputContainer>
             <SubmitButton primary="true" hover="true">
