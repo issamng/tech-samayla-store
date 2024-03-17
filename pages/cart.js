@@ -91,7 +91,7 @@ const CartEmpty = styled(Link)`
 
 const ErrorMessage = styled.div`
   color: red;
-  margin: -4px 0 13px 1px;
+  margin: -2px 0 13px 1px;
   font-size: 0.8rem;
 `;
 
@@ -352,6 +352,7 @@ export default function CartPage() {
                     placeholder="Prénom"
                     value={firstName}
                     name="firstName"
+                    hasError={errors.firstName}
                     onChange={(ev) => setFirstName(ev.target.value)}
                   />
                   {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage> }
@@ -360,7 +361,7 @@ export default function CartPage() {
                     placeholder="Nom"
                     value={lastName}
                     name="lastName"
-                    
+                    hasError={errors.lastName}
                     onChange={(ev) => setLastName(ev.target.value)}
                   />
                   {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage> }
@@ -370,6 +371,7 @@ export default function CartPage() {
                     placeholder="Email"
                     value={email}
                     name="email"
+                    hasError={errors.email}
                     onChange={(ev) => setEmail(ev.target.value)}
                   />
                   {errors.email && <ErrorMessage>{errors.email}</ErrorMessage> }
@@ -379,6 +381,7 @@ export default function CartPage() {
                       placeholder="Ville"
                       value={city}
                       name="city"
+                      hasError={errors.city}
                       onChange={(ev) => setCity(ev.target.value)}
                     />
                     {errors.city && <ErrorMessage>{errors.city}</ErrorMessage> }
@@ -387,6 +390,7 @@ export default function CartPage() {
                       placeholder="Code postal"
                       value={postalCode}
                       name="postalCode"
+                      hasError={errors.postalCode}
                       onChange={(ev) => setPostalCode(ev.target.value)}
                     />
                     {errors.postalCode && <ErrorMessage>{errors.postalCode}</ErrorMessage> }
@@ -397,6 +401,7 @@ export default function CartPage() {
                     placeholder="Adresse"
                     value={adress}
                     name="adress"
+                    hasError={errors.adress}
                     onChange={(ev) => setAdress(ev.target.value)}
                   />
                   {errors.adress && <ErrorMessage>{errors.adress}</ErrorMessage> }
@@ -405,6 +410,7 @@ export default function CartPage() {
                     placeholder="Pays"
                     value={country}
                     name="country"
+                    hasError={errors.country}
                     onChange={(ev) => setCountry(ev.target.value)}
                     
                   />
