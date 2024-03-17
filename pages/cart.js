@@ -89,9 +89,26 @@ const CartEmpty = styled(Link)`
   }
 `;
 
+const InputField = styled.input`
+  width: 100%;
+  padding: 8px;
+  padding-left: 0;
+  margin-bottom: 2px;
+  border: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  border-bottom: 1px solid ${(props) => (props.hasError ? "red" : "#d1d1d4")};
+  &:active,
+  &:hover,
+  &:focus {
+    outline: none;
+    border-bottom-color: #29465b;
+  }
+`;
+
 const ErrorMessage = styled.div`
   color: red;
-  margin: -2px 0 13px 1px;
+  margin: -2px 0 5px 0;
   font-size: 0.8rem;
 `;
 
@@ -347,7 +364,7 @@ export default function CartPage() {
               <div>
                 <WhiteBox>
                   <Title>Saisissez vos informations</Title>
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Prénom"
                     value={firstName}
@@ -356,7 +373,7 @@ export default function CartPage() {
                     onChange={(ev) => setFirstName(ev.target.value)}
                   />
                   {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage> }
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Nom"
                     value={lastName}
@@ -366,7 +383,7 @@ export default function CartPage() {
                   />
                   {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage> }
                   
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Email"
                     value={email}
@@ -376,7 +393,7 @@ export default function CartPage() {
                   />
                   {errors.email && <ErrorMessage>{errors.email}</ErrorMessage> }
                  
-                    <Input
+                    <InputField
                       type="text"
                       placeholder="Ville"
                       value={city}
@@ -385,7 +402,7 @@ export default function CartPage() {
                       onChange={(ev) => setCity(ev.target.value)}
                     />
                     {errors.city && <ErrorMessage>{errors.city}</ErrorMessage> }
-                    <Input
+                    <InputField
                       type="text"
                       placeholder="Code postal"
                       value={postalCode}
@@ -396,7 +413,7 @@ export default function CartPage() {
                     {errors.postalCode && <ErrorMessage>{errors.postalCode}</ErrorMessage> }
                
 
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Adresse"
                     value={adress}
@@ -405,7 +422,7 @@ export default function CartPage() {
                     onChange={(ev) => setAdress(ev.target.value)}
                   />
                   {errors.adress && <ErrorMessage>{errors.adress}</ErrorMessage> }
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Pays"
                     value={country}

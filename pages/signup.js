@@ -58,7 +58,7 @@ const SubmitButton = styled(Button)`
 
 const ErrorMessage = styled.div`
   color: red;
-  margin: -15px 0 13px 1px;
+  margin: -15px 0 10px 0;
   font-size: 0.8rem;
 `;
 

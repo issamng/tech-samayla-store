@@ -40,11 +40,14 @@ const Filter = styled.div`
   display: flex;
   gap: 5px;
   color: #444;
+  
   select {
     background-color: transparent;
     border: 0;
     font-size: inherit;
     color: #444;
+    font-family:inherit;
+    outline: none;
   }
 `;
 
