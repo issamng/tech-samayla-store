@@ -53,7 +53,7 @@ const ProductImageBox = styled.div`
     width: 100px;
     height: 100px;
     padding: 10px;
-    .productImageBox{
+    .productImageBox {
       max-width: 100px;
       max-height: 100px;
     }
@@ -112,19 +112,20 @@ const ErrorMessage = styled.div`
   font-size: 0.8rem;
 `;
 
-
 export default function CartPage() {
   const { data: session } = useSession();
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
   const [products, setProducts] = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [adress, setAdress] = useState("");
-  const [country, setCountry] = useState("");
+  const [inputValues, setInputValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    city: '',
+    postalCode: '',
+    adress: '',
+    country: ''
+  });
   const [isSuccess, setIsSuccess] = useState(false);
   // Shipping fee
   const [shippingFee, setShippingFee] = useState(null);
@@ -169,13 +170,16 @@ export default function CartPage() {
 
     if (session) {
       axios.get("/api/userInformation").then((response) => {
-        setFirstName(response.data?.firstName);
-        setLastName(response.data?.lastName);
-        setEmail(response.data?.email);
-        setCity(response.data?.city);
-        setPostalCode(response.data?.postalCode);
-        setAdress(response.data?.adress);
-        setCountry(response.data?.country);
+        setInputValues({
+          firstName: response.data?.firstName || "",
+          lastName: response.data?.lastName || "",
+          email: response.data?.email || "",
+          city: response.data?.city || "",
+          postalCode: response.data?.postalCode || "",
+          adress: response.data?.adress || "", 
+          country: response.data?.country || ""
+        });
+        // setErrors({});
       });
     }
 
@@ -194,27 +198,35 @@ export default function CartPage() {
     setLoading(false);
   }
 
-  const goToPayment = async () => {
+   // Function to handle input change and clear error message
+   const handleInputChange = (fieldName, value) => {
+    // Clear the error message for the fieldName
+    setErrors(prevErrors => ({ ...prevErrors, [fieldName]: '' }));
+    // Update the state for the fieldName
+    setInputValues(prevValues => ({ ...prevValues, [fieldName]: value }));
+  };
+   
 
+  const goToPayment = async () => {
     // Check if all fields are filled in
     const newErrors = {};
-    if (!firstName) newErrors.firstName = "Entrez votre nom";
-    if (!lastName) newErrors.lastName = "Entrez votre prénom";
-    if (!email) newErrors.email = "Entrez votre email";
-    if (!city) newErrors.city = "Entrez votre ville";
-    if (!postalCode) newErrors.postalCode = "Entrez votre code postal";
-    if (!adress) newErrors.adress = "Entrez votre adresse";
-    if (!country) newErrors.country = "Entrez votre pays";
+    if (!inputValues.firstName) newErrors.firstName = "Entrez votre prénom";
+    if (!inputValues.lastName) newErrors.lastName = "Entrez votre nom";
+    if (!inputValues.email) newErrors.email = "Entrez votre email";
+    if (!inputValues.city) newErrors.city = "Entrez votre ville";
+    if (!inputValues.postalCode) newErrors.postalCode = "Entrez votre code postal";
+    if (!inputValues.adress) newErrors.adress = "Entrez votre adresse";
+    if (!inputValues.country) newErrors.country = "Entrez votre pays";
 
-    // Update errors 
+    // Update errors
     setErrors(newErrors);
 
-    // Not proceed to payment if fields are empty 
+    // Not proceed to payment if fields are empty
     if (Object.keys(newErrors).length > 0) {
       return;
     }
 
-    // Proceed to payment 
+    // Proceed to payment
     const response = await axios.post("/api/checkout", {
       firstName,
       lastName,
@@ -280,7 +292,7 @@ export default function CartPage() {
 
               {loading && <Spinner fullWidth={true} />}
 
-              {products?.length > 0 &&  (
+              {products?.length > 0 && (
                 <>
                   <Table>
                     <thead>
@@ -295,7 +307,13 @@ export default function CartPage() {
                         <tr key={product._id}>
                           <ProductInfoCell>
                             <ProductImageBox>
-                              <Image className={"productImageBox"} src={product.images[0]} width={100} height={100} alt="" />
+                              <Image
+                                className={"productImageBox"}
+                                src={product.images[0]}
+                                width={100}
+                                height={100}
+                                alt=""
+                              />
                               {/* <img src={product.images[0]} alt="" />  */}
                             </ProductImageBox>
 
@@ -367,72 +385,87 @@ export default function CartPage() {
                   <InputField
                     type="text"
                     placeholder="Prénom"
-                    value={firstName}
+                    value={inputValues.firstName}
                     name="firstName"
                     hasError={errors.firstName}
-                    onChange={(ev) => setFirstName(ev.target.value)}
+                   onChange={(e) => handleInputChange('firstName', e.target.value)}
                   />
-                  {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage> }
+                  {errors.firstName && (
+                    <ErrorMessage>{errors.firstName}</ErrorMessage>
+                  )}
+
                   <InputField
                     type="text"
                     placeholder="Nom"
-                    value={lastName}
+                    value={inputValues.lastName}
                     name="lastName"
                     hasError={errors.lastName}
-                    onChange={(ev) => setLastName(ev.target.value)}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
                   />
-                  {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage> }
-                  
+                  {errors.lastName && (
+                    <ErrorMessage>{errors.lastName}</ErrorMessage>
+                  )}
+
                   <InputField
                     type="text"
                     placeholder="Email"
-                    value={email}
+                    value={inputValues.email}
                     name="email"
                     hasError={errors.email}
-                    onChange={(ev) => setEmail(ev.target.value)}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                   />
-                  {errors.email && <ErrorMessage>{errors.email}</ErrorMessage> }
-                 
-                    <InputField
-                      type="text"
-                      placeholder="Ville"
-                      value={city}
-                      name="city"
-                      hasError={errors.city}
-                      onChange={(ev) => setCity(ev.target.value)}
-                    />
-                    {errors.city && <ErrorMessage>{errors.city}</ErrorMessage> }
-                    <InputField
-                      type="text"
-                      placeholder="Code postal"
-                      value={postalCode}
-                      name="postalCode"
-                      hasError={errors.postalCode}
-                      onChange={(ev) => setPostalCode(ev.target.value)}
-                    />
-                    {errors.postalCode && <ErrorMessage>{errors.postalCode}</ErrorMessage> }
-               
+                  {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+
+                  <InputField
+                    type="text"
+                    placeholder="Ville"
+                    value={inputValues.city}
+                    name="city"
+                    hasError={errors.city}
+                    onChange={(e) => handleInputChange('city', e.target.value)}
+                  />
+                  {errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
+                  <InputField
+                    type="text"
+                    placeholder="Code postal"
+                    value={inputValues.postalCode}
+                    name="postalCode"
+                    hasError={errors.postalCode}
+                    onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                  />
+                  {errors.postalCode && (
+                    <ErrorMessage>{errors.postalCode}</ErrorMessage>
+                  )}
 
                   <InputField
                     type="text"
                     placeholder="Adresse"
-                    value={adress}
+                    value={inputValues.adress}
                     name="adress"
                     hasError={errors.adress}
-                    onChange={(ev) => setAdress(ev.target.value)}
+                    onChange={(e) => handleInputChange('adress', e.target.value)}
                   />
-                  {errors.adress && <ErrorMessage>{errors.adress}</ErrorMessage> }
+                  {errors.adress && (
+                    <ErrorMessage>{errors.adress}</ErrorMessage>
+                  )}
                   <InputField
                     type="text"
                     placeholder="Pays"
-                    value={country}
+                    value={inputValues.country}
                     name="country"
                     hasError={errors.country}
-                    onChange={(ev) => setCountry(ev.target.value)}
-                    
+                    onChange={(e) => handleInputChange('country', e.target.value)}
                   />
-                  {errors.country && <ErrorMessage>{errors.country}</ErrorMessage> }
-                  <Button black="true" block="true" hover="true" style={{ marginTop: '13px' }}  onClick={goToPayment}>
+                  {errors.country && (
+                    <ErrorMessage>{errors.country}</ErrorMessage>
+                  )}
+                  <Button
+                    black="true"
+                    block="true"
+                    hover="true"
+                    style={{ marginTop: "13px" }}
+                    onClick={goToPayment}
+                  >
                     Continuez vers le paiement
                   </Button>
                 </WhiteBox>
