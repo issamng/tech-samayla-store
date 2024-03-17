@@ -39,7 +39,7 @@ export default async function handler(req, res) {
           currency: "eur",
           product_data: { name: productInfo.title },
           //We multiply by 100 because Stripe display interpret the prices in cents 
-          unit_amount: quantity * productInfo.prix * 100,
+          unit_amount:  productInfo.prix * 100,
         },
       });
     }

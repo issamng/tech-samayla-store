@@ -20,6 +20,7 @@ import Title from "@/components/Title";
 import Spinner from "@/components/Spinner";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRouter } from "next/router";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -114,6 +115,7 @@ const ErrorMessage = styled.div`
 `;
 
 export default function AccountPage() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -153,13 +155,12 @@ export default function AccountPage() {
         email,
         password,
         redirect:false,
-        callbackUrl: "/account",
+        // callbackUrl: "/account",
       });
-      if (!result?.ok) {
-        console.error("Sign-in unsuccessful:", result);
-        setError(
-          "Votre adresse e-mail ou votre mot de passe est incorrect. Veuillez réessayer."
-        );
+      if (result?.ok) {
+        router.push("/account"); 
+      } else {
+        setError("Votre adresse e-mail ou votre mot de passe est incorrect. Veuillez réessayer.");
       }
     } catch (error) {
       console.error("Error", error);

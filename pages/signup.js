@@ -122,9 +122,12 @@ export default function SignUpPage() {
     firstName: yup.string().required("Entrez votre prénom").max(50),
     email: yup
     .string()
-    .email("Format invalide")
+    .email("L'adresse email saisie n'est pas valide.")
     .required("Entrez votre email")
-    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,"Format invalide"),
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "L'adresse email saisie n'est pas valide."
+    ),
     password: yup.string()
     .required("Entrez votre mot de passe")
     .min(6, "Le mot de passe doit contenir au moins 6 caractères")

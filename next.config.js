@@ -5,7 +5,7 @@ const nextConfig = {
     styledComponents: true,
   }, 
   images: {
-    domains: ['pfe-next.s3.amazonaws.com'], // Add your image domain here
+    domains: ['pfe-next.s3.amazonaws.com'], 
   },
 }
 

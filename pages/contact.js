@@ -86,11 +86,18 @@ export default function ContactPage() {
       .string()
       .required("Entrez votre prénom")
       .max(50, "Le prénom ne doit pas dépasser 50 caractères."),
-    Email: yup.string().email("Format invalide").required("Entrez votre email"),
-    Objet: yup
+    email: yup
+      .string()
+      .email("L'adresse email saisie n'est pas valide.")
+      .required("Entrez votre email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "L'adresse email saisie n'est pas valide."
+      ),
+    subject: yup
       .string()
       .max(100, "L'objet ne doit pas dépasser 100 caractères."),
-    Message: yup.string().required("Entrez votre message"),
+    message: yup.string().required("Entrez votre message"),
   });
 
   const {
@@ -164,25 +171,27 @@ export default function ContactPage() {
             <InputField
               type="email"
               placeholder="Email"
-              {...register("Email", {
+              {...register("email", {
                 required: true,
-                pattern: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i,
               })}
             />
-            {errors.Email && (
-              <ErrorMessage>{errors.Email.message}</ErrorMessage>
+            {errors.email && (
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
 
             <InputField
               type="text"
               placeholder="Objet"
-              {...register("Subject", { maxLength: 100 })}
+              {...register("subject", { maxLength: 100 })}
             />
+            {errors.subject && (
+              <ErrorMessage>{errors.subject.message}</ErrorMessage>
+            )}
             <TextAreaField
               placeholder="Message"
-              {...register("Message", { required: true })}
+              {...register("message", { required: true })}
             />
-            <ErrorMessage>{errors.Message?.message}</ErrorMessage>
+            <ErrorMessage>{errors.message?.message}</ErrorMessage>
             <SubmitButton primary="true" hover="true" disabled={isLoading}>
               {isLoading ? (
                 <Spinner fullWidth={true} white={true} />

@@ -89,6 +89,12 @@ const CartEmpty = styled(Link)`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin: -4px 0 13px 1px;
+  font-size: 0.8rem;
+`;
+
 export default function CartPage() {
   const { data: session } = useSession();
   const { cartProducts, addProduct, removeProduct, clearCart } =
@@ -104,8 +110,10 @@ export default function CartPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   // Shipping fee
   const [shippingFee, setShippingFee] = useState(null);
-  //Spinner before displaying products in cart page
+  // Spinner before displaying products in cart page
   const [loading, setLoading] = useState(false);
+  // Erros if fields are empty
+  const [errors, setErrors] = useState({});
 
   //Display products in cart box
   useEffect(() => {
@@ -168,7 +176,26 @@ export default function CartPage() {
     setLoading(false);
   }
 
-  async function goToPayment() {
+  const goToPayment = async () => {
+    // Vérifier si tous les champs sont remplis
+    const newErrors = {};
+    if (!firstName) newErrors.firstName = "Entrez votre nom";
+    if (!lastName) newErrors.lastName = "Entrez votre prénom";
+    if (!email) newErrors.email = "Entrez votre adresse email";
+    if (!city) newErrors.city = "Entrez votre ville";
+    if (!postalCode) newErrors.postalCode = "Entrez votre code postal";
+    if (!adress) newErrors.adress = "Entrez votre adresse";
+    if (!country) newErrors.country = "Entrez votre pays";
+
+    // Update errors 
+    setErrors(newErrors);
+
+    // Not proceed to payment if fields are empty 
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    // Proceed to payment 
     const response = await axios.post("/api/checkout", {
       firstName,
       lastName,
@@ -182,7 +209,8 @@ export default function CartPage() {
     if (response.data.url) {
       window.location = response.data.url;
     }
-  }
+  };
+  
   // Total orders price in cart page
   let total = 0;
   for (const productId of cartProducts) {
@@ -322,8 +350,10 @@ export default function CartPage() {
                     placeholder="Nom"
                     value={firstName}
                     name="firstName"
+                    
                     onChange={(ev) => setFirstName(ev.target.value)}
                   />
+                  {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage> }
                   <Input
                     type="text"
                     placeholder="Prénom"
@@ -331,6 +361,7 @@ export default function CartPage() {
                     name="lastName"
                     onChange={(ev) => setLastName(ev.target.value)}
                   />
+                  {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage> }
                   <Input
                     type="text"
                     placeholder="Email"
@@ -338,7 +369,8 @@ export default function CartPage() {
                     name="email"
                     onChange={(ev) => setEmail(ev.target.value)}
                   />
-                  <CityHolder>
+                  {errors.email && <ErrorMessage>{errors.email}</ErrorMessage> }
+                 
                     <Input
                       type="text"
                       placeholder="Ville"
@@ -346,6 +378,7 @@ export default function CartPage() {
                       name="city"
                       onChange={(ev) => setCity(ev.target.value)}
                     />
+                    {errors.city && <ErrorMessage>{errors.city}</ErrorMessage> }
                     <Input
                       type="text"
                       placeholder="Code postal"
@@ -353,7 +386,8 @@ export default function CartPage() {
                       name="postalCode"
                       onChange={(ev) => setPostalCode(ev.target.value)}
                     />
-                  </CityHolder>
+                    {errors.postalCode && <ErrorMessage>{errors.postalCode}</ErrorMessage> }
+               
 
                   <Input
                     type="text"
@@ -362,6 +396,7 @@ export default function CartPage() {
                     name="adress"
                     onChange={(ev) => setAdress(ev.target.value)}
                   />
+                  {errors.adress && <ErrorMessage>{errors.adress}</ErrorMessage> }
                   <Input
                     type="text"
                     placeholder="Pays"
@@ -369,7 +404,8 @@ export default function CartPage() {
                     name="country"
                     onChange={(ev) => setCountry(ev.target.value)}
                   />
-                  <Button black="true" block="true" onClick={goToPayment}>
+                  {errors.country && <ErrorMessage>{errors.country}</ErrorMessage> }
+                  <Button black="true" block="true" hover="true" onClick={goToPayment}>
                     Continuez vers le paiement
                   </Button>
                 </WhiteBox>

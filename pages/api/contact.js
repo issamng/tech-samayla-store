@@ -19,9 +19,9 @@ export default async function handle(req, res) {
         text: `
           Nom: ${data.lastName}
           Prénom: ${data.firstName}
-          Email: ${data.Email}
-          Objet: ${data.Subject}
-          Message: ${data.Message}
+          Email: ${data.email}
+          Objet: ${data.subject}
+          Message: ${data.message}
         `,
         html: `
           <h1>Tech Samayla</h1><h2>Vous avez un nouveau message</h2>

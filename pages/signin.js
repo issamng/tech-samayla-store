@@ -11,6 +11,7 @@ import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const FormWrapper = styled.div`
   background-color: #f8f8f8;
@@ -96,11 +97,12 @@ const ErrorMessage = styled.div`
 `;
 
 export default function SignInPage() {
+  const router = useRouter();
   // State for the case of invalid password
   const [error, setError] = useState(null);
 
   const schema = yup.object({
-    email: yup
+      email: yup
       .string()
       .email("L'adresse email saisie n'est pas valide.")
       .required("Entrez votre email")
@@ -125,15 +127,17 @@ export default function SignInPage() {
   // Connect with credentials
   const onSubmit = async ({ email, password }) => {
     try {
-      // Sign in without automatic redirection
+      
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
-        callbackUrl: "/",
+        // callbackUrl: "/",
       });
 
-      if (!result?.ok) {
+      if (result?.ok) {
+        router.push("/"); 
+      } else {
         setError("Votre adresse e-mail ou votre mot de passe est incorrect. Veuillez réessayer.");
       }
     } catch (error) {
