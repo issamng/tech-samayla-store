@@ -95,6 +95,7 @@ const ErrorMessage = styled.div`
   font-size: 0.8rem;
 `;
 
+
 export default function CartPage() {
   const { data: session } = useSession();
   const { cartProducts, addProduct, removeProduct, clearCart } =
@@ -177,11 +178,12 @@ export default function CartPage() {
   }
 
   const goToPayment = async () => {
-    // Vérifier si tous les champs sont remplis
+
+    // Check if all fields are filled in
     const newErrors = {};
     if (!firstName) newErrors.firstName = "Entrez votre nom";
     if (!lastName) newErrors.lastName = "Entrez votre prénom";
-    if (!email) newErrors.email = "Entrez votre adresse email";
+    if (!email) newErrors.email = "Entrez votre email";
     if (!city) newErrors.city = "Entrez votre ville";
     if (!postalCode) newErrors.postalCode = "Entrez votre code postal";
     if (!adress) newErrors.adress = "Entrez votre adresse";
@@ -210,7 +212,7 @@ export default function CartPage() {
       window.location = response.data.url;
     }
   };
-  
+
   // Total orders price in cart page
   let total = 0;
   for (const productId of cartProducts) {
@@ -347,21 +349,22 @@ export default function CartPage() {
                   <Title>Saisissez vos informations</Title>
                   <Input
                     type="text"
-                    placeholder="Nom"
+                    placeholder="Prénom"
                     value={firstName}
                     name="firstName"
-                    
                     onChange={(ev) => setFirstName(ev.target.value)}
                   />
                   {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage> }
                   <Input
                     type="text"
-                    placeholder="Prénom"
+                    placeholder="Nom"
                     value={lastName}
                     name="lastName"
+                    
                     onChange={(ev) => setLastName(ev.target.value)}
                   />
                   {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage> }
+                  
                   <Input
                     type="text"
                     placeholder="Email"
@@ -403,9 +406,10 @@ export default function CartPage() {
                     value={country}
                     name="country"
                     onChange={(ev) => setCountry(ev.target.value)}
+                    
                   />
                   {errors.country && <ErrorMessage>{errors.country}</ErrorMessage> }
-                  <Button black="true" block="true" hover="true" onClick={goToPayment}>
+                  <Button black="true" block="true" hover="true" style={{ marginTop: '13px' }}  onClick={goToPayment}>
                     Continuez vers le paiement
                   </Button>
                 </WhiteBox>

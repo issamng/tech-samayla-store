@@ -195,6 +195,15 @@ export default function SignUpPage() {
         <FormWrapper>
           <FormTitle>Créer un compte</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
+          <InputField
+              type="text"
+              placeholder="Prénom"
+              {...register("firstName", { required: true })}
+              hasError={errors.firstName}
+            />
+            {errors.firstName && (
+              <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+            )}
             <InputField
               type="text"
               placeholder="Nom"
@@ -204,15 +213,7 @@ export default function SignUpPage() {
             {errors.lastName && (
               <ErrorMessage>{errors.lastName.message}</ErrorMessage>
             )}
-            <InputField
-              type="text"
-              placeholder="Prénom"
-              {...register("firstName", { required: true })}
-              hasError={errors.firstName}
-            />
-            {errors.firstName && (
-              <ErrorMessage>{errors.firstName.message}</ErrorMessage>
-            )}
+          
             <InputField
               type="email"
               placeholder="Email"
