@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 
 export default function HomePage({ featuredProduct, newProducts, wishedNewProducts }) {
   return (
-    <div>
+    <div data-testid="home-page">
          <Helmet>
         {/* Google Analytics main code */}
         <script>
@@ -26,10 +26,10 @@ export default function HomePage({ featuredProduct, newProducts, wishedNewProduc
           `}
         </script>
       </Helmet>
-      <Header />
-      <Featured product={featuredProduct} />
-      <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
-      <Footer />
+      <Header data-testid="header" />
+      <Featured product={featuredProduct} data-testid="featured-product" />
+      <NewProducts products={newProducts} wishedProducts={wishedNewProducts} data-testid="new-products" />
+      <Footer data-testid="footer" />
       <Helmet>
         {/* Google Analytics (noscript) */}
         <noscript>

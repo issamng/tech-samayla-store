@@ -237,19 +237,6 @@ export default function SignUpPage() {
             {errors.password && (
               <ErrorMessage>{errors.password.message}</ErrorMessage>
             )}
-            {/* <InputField
-              type="password"
-              placeholder="Confirmez votre mot de passe"
-              {...register("PasswordConfirmation", {
-                required: true,
-                max: 14,
-                min: 6,
-                maxLength: 14,
-              })}
-            />
-            {errors.PasswordConfirmation && (
-              <ErrorMessage>{errors.PasswordConfirmation.message}</ErrorMessage>
-            )} */}
 
             <SubmitButton primary="true" hover="true" disabled={isLoading}>
               {isLoading ? (

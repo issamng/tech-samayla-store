@@ -45,7 +45,7 @@ export function CartContextProvider({ children }) {
   
   
   function clearCart() {
-    console.log("Clearing cart...");
+    // console.log("Clearing cart...");
     setCartProducts([]);
     ls.removeItem("cart");
     // console.log("Cart cleared:", cartProducts);

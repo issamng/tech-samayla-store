@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const getNewProducts = async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/newProducts");
+    const response = await axios.get("https://techsamayla.vercel.app/api/newProducts");
     console.log("Liste des nouveaux produits :", response.data);
   } catch (error) {
     console.error(

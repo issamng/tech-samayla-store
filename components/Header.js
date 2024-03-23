@@ -200,7 +200,7 @@ export default function Header() {
   }
 
   return (
-    <StyledHeader>
+    <StyledHeader data-testid="header">
       {/* <Center> */}
       <Wrapper>
         <Logo href={"/"}>
