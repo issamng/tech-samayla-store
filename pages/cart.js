@@ -118,13 +118,13 @@ export default function CartPage() {
     useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [inputValues, setInputValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    city: '',
-    postalCode: '',
-    adress: '',
-    country: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    city: "",
+    postalCode: "",
+    adress: "",
+    country: "",
   });
   const [isSuccess, setIsSuccess] = useState(false);
   // Shipping fee
@@ -176,8 +176,8 @@ export default function CartPage() {
           email: response.data?.email || "",
           city: response.data?.city || "",
           postalCode: response.data?.postalCode || "",
-          adress: response.data?.adress || "", 
-          country: response.data?.country || ""
+          adress: response.data?.adress || "",
+          country: response.data?.country || "",
         });
         // setErrors({});
       });
@@ -198,14 +198,13 @@ export default function CartPage() {
     setLoading(false);
   }
 
-   // Function to handle input change and clear error message
-   const handleInputChange = (fieldName, value) => {
+  // Function to handle input change and clear error message
+  const handleInputChange = (fieldName, value) => {
     // Clear the error message for the fieldName
-    setErrors(prevErrors => ({ ...prevErrors, [fieldName]: '' }));
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
     // Update the state for the fieldName
-    setInputValues(prevValues => ({ ...prevValues, [fieldName]: value }));
+    setInputValues((prevValues) => ({ ...prevValues, [fieldName]: value }));
   };
-   
 
   const goToPayment = async () => {
     // Check if all fields are filled in
@@ -214,7 +213,8 @@ export default function CartPage() {
     if (!inputValues.lastName) newErrors.lastName = "Entrez votre nom";
     if (!inputValues.email) newErrors.email = "Entrez votre email";
     if (!inputValues.city) newErrors.city = "Entrez votre ville";
-    if (!inputValues.postalCode) newErrors.postalCode = "Entrez votre code postal";
+    if (!inputValues.postalCode)
+      newErrors.postalCode = "Entrez votre code postal";
     if (!inputValues.adress) newErrors.adress = "Entrez votre adresse";
     if (!inputValues.country) newErrors.country = "Entrez votre pays";
 
@@ -228,13 +228,13 @@ export default function CartPage() {
 
     // Proceed to payment
     const response = await axios.post("/api/checkout", {
-      firstName,
-      lastName,
-      email,
-      city,
-      postalCode,
-      adress,
-      country,
+      firstName: inputValues.firstName,
+      lastName: inputValues.lastName,
+      email: inputValues.email,
+      city: inputValues.city,
+      postalCode: inputValues.postalCode,
+      adress: inputValues.adress,
+      country: inputValues.country,
       cartProducts,
     });
     if (response.data.url) {
@@ -388,7 +388,9 @@ export default function CartPage() {
                     value={inputValues.firstName}
                     name="firstName"
                     hasError={errors.firstName}
-                   onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("firstName", e.target.value)
+                    }
                   />
                   {errors.firstName && (
                     <ErrorMessage>{errors.firstName}</ErrorMessage>
@@ -400,7 +402,9 @@ export default function CartPage() {
                     value={inputValues.lastName}
                     name="lastName"
                     hasError={errors.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("lastName", e.target.value)
+                    }
                   />
                   {errors.lastName && (
                     <ErrorMessage>{errors.lastName}</ErrorMessage>
@@ -412,7 +416,7 @@ export default function CartPage() {
                     value={inputValues.email}
                     name="email"
                     hasError={errors.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                   />
                   {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
 
@@ -422,7 +426,7 @@ export default function CartPage() {
                     value={inputValues.city}
                     name="city"
                     hasError={errors.city}
-                    onChange={(e) => handleInputChange('city', e.target.value)}
+                    onChange={(e) => handleInputChange("city", e.target.value)}
                   />
                   {errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
                   <InputField
@@ -431,7 +435,9 @@ export default function CartPage() {
                     value={inputValues.postalCode}
                     name="postalCode"
                     hasError={errors.postalCode}
-                    onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("postalCode", e.target.value)
+                    }
                   />
                   {errors.postalCode && (
                     <ErrorMessage>{errors.postalCode}</ErrorMessage>
@@ -443,7 +449,9 @@ export default function CartPage() {
                     value={inputValues.adress}
                     name="adress"
                     hasError={errors.adress}
-                    onChange={(e) => handleInputChange('adress', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("adress", e.target.value)
+                    }
                   />
                   {errors.adress && (
                     <ErrorMessage>{errors.adress}</ErrorMessage>
@@ -454,7 +462,9 @@ export default function CartPage() {
                     value={inputValues.country}
                     name="country"
                     hasError={errors.country}
-                    onChange={(e) => handleInputChange('country', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("country", e.target.value)
+                    }
                   />
                   {errors.country && (
                     <ErrorMessage>{errors.country}</ErrorMessage>
